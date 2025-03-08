@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuraFlex Math Assistant</title>
+    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>" type="image/svg+xml">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <span class="icon"><i class="fas fa-robot"></i></span>
+                <h1>NeuraFlex Math Assistant</h1>
+            </div>
+            <div class="toggle-container">
+                <label class="toggle-label">
+                    <input type="checkbox" id="steps-toggle" checked>
+                    <span class="toggle-text">Show Steps</span>
+                </label>
+                <button class="who-are-you-btn">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Who are you?</span>
+                </button>
+                <button class="training-info-btn">
+                    <i class="fas fa-brain"></i>
+                    <span>Training Info</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="chat-container">
+            <div id="chat-messages" class="chat-messages">
+                <div class="message system">
+                    <div class="message-content">
+                        <p>Welcome to the NeuraFlex Math Assistant! Ask me any math problem, and I'll solve it for you.</p>
+                        <div class="examples-container">
+                            <p><strong>Try some examples:</strong></p>
+                            <div id="examples-list" class="examples-list">
+                                <!-- Examples will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input-container">
+                <textarea id="user-input" class="chat-input" placeholder="Type a math problem..."></textarea>
+                <button id="send-button" class="send-button">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Training Modal -->
+    <div id="training-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>NeuraFlex Self-Referential Training</h2>
+            <div class="modal-body">
+                <h3>1. Self-Knowledge Dataset</h3>
+                <p>NeuraFlex uses a structured self-knowledge dataset with core metadata, synthetic Q&A pairs, and self-update logs.</p>
+                <pre><code>{
+  "name": "NeuraFlex",
+  "creator": "Saptarshi Halder",
+  "architecture": "Hybrid Transformer-CNN with RAG",
+  "parameter_count": "1.45M",
+  "purpose": "Answer mathematical questions and self-referential queries"
+}</code></pre>
+
+                <h3>2. Specialized Tokenization</h3>
+                <p>Special tokens used: <code>[SELF]</code>, <code>[CREATOR]</code>, <code>[ARCH]</code>, <code>[LIMIT]</code></p>
+
+                <h3>3. Architecture</h3>
+                <p>NeuraFlex uses a dual encoder system:</p>
+                <ul>
+                    <li>General Encoder: Processes user questions</li>
+                    <li>Self-Encoder (Lightweight CNN): Encodes metadata</li>
+                    <li>Fusion Layer: Cross-attention between encoders</li>
+                </ul>
+
+                <h3>4. Training Process</h3>
+                <ul>
+                    <li>Pre-Training with Contrastive Learning</li>
+                    <li>RLHF for Self-Consistency</li>
+                    <li>Adversarial Training</li>
+                </ul>
+
+                <h3>5. Evaluation</h3>
+                <p>NeuraFlex achieves 93% accuracy on self-referential QA while maintaining mathematical problem-solving capabilities.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize KaTeX auto-render if available
+            if (window.renderMathInElement) {
+                window.renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

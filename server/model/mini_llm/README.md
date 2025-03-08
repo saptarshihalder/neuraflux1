@@ -8,6 +8,7 @@ This project implements a small language model (MiniLLM) with a focus on knowled
 - **Transformer Architecture**: Implements a transformer model with GLU activations and RoPE
 - **Knowledge Transfer**: System for distilling knowledge from larger teacher models
 - **Mathematical Problem-Solving**: Specialized training for solving complex mathematical problems
+- **Web Interface**: ChatGPT-style UI for interacting with the model
 
 ## Components
 
@@ -17,6 +18,7 @@ This project implements a small language model (MiniLLM) with a focus on knowled
 - `testing/`: Evaluation tools and metrics
 - `data/`: Sample training data
 - `output/`: Model checkpoints and logs
+- `web/`: ChatGPT-style web interface for the model
 
 ## Mathematical Problem-Solving
 
@@ -59,6 +61,26 @@ To evaluate the model's mathematical capabilities:
 ```bash
 python testing/test_math_llm.py --model-path output/math_finetuned/final_model
 ```
+
+## Web Interface
+
+The project includes a ChatGPT-style web interface for interacting with the model:
+
+### Features
+- Intuitive chat interface for mathematical problems
+- Step-by-step solution display
+- Mathematical expressions rendering
+- Example problems for quick testing
+
+### Running the Web Interface
+
+```bash
+cd web
+pip install -r requirements.txt
+python app.py
+```
+
+Then open your browser to `http://localhost:5000` to access the chat interface.
 
 ## Getting Started
 
