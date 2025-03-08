@@ -1,6 +1,102 @@
 # MiniLLM: Small Language Model with Knowledge Transfer
 
-MiniLLM is a lightweight language model designed to run efficiently on consumer hardware while maintaining strong capabilities through knowledge transfer from larger teacher models.
+This project implements a small language model (MiniLLM) with a focus on knowledge transfer from larger teacher models. It includes a complete training pipeline, tokenization, and inference capabilities.
+
+## Features
+
+- **BPE Tokenizer**: Custom implementation of Byte-Pair Encoding tokenization
+- **Transformer Architecture**: Implements a transformer model with GLU activations and RoPE
+- **Knowledge Transfer**: System for distilling knowledge from larger teacher models
+- **Mathematical Problem-Solving**: Specialized training for solving complex mathematical problems
+
+## Components
+
+- `tokenizer/`: BPE tokenizer implementation
+- `model/`: Transformer model architecture
+- `training/`: Knowledge transfer and fine-tuning systems
+- `testing/`: Evaluation tools and metrics
+- `data/`: Sample training data
+- `output/`: Model checkpoints and logs
+
+## Mathematical Problem-Solving
+
+The model has been extended with specialized capabilities for solving complex mathematical problems:
+
+### Math Training Features
+
+- **Step-by-Step Solutions**: Generates detailed explanations for mathematical problems
+- **LaTeX Support**: Handles mathematical notation and expressions
+- **Domain Coverage**: Supports algebra, calculus, linear algebra, and more
+- **Evaluation Metrics**: Specialized accuracy metrics for mathematical solutions
+
+### Math Training Data
+
+The model is trained on a diverse set of mathematical problems, including:
+
+- Algebraic equations and proofs
+- Calculus problems (derivatives, integrals)
+- Linear algebra (eigenvalues, matrices)
+- Complex analysis
+- Differential equations
+- Optimization problems
+
+### Usage
+
+To generate solutions for mathematical problems:
+
+```bash
+python generate_math_solutions.py --problem "Find the derivative of f(x) = x³ - 2x² + 4x - 1"
+```
+
+To fine-tune the model on custom mathematical problems:
+
+```bash
+python training/finetune_math.py --problems-path data/custom_math_problems.json
+```
+
+To evaluate the model's mathematical capabilities:
+
+```bash
+python testing/test_math_llm.py --model-path output/math_finetuned/final_model
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- Required packages: numpy, sympy, torch, transformers, tqdm
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the demo: `python generate_math_solutions.py --random`
+
+## Training
+
+### Knowledge Transfer Training
+
+```bash
+python training/knowledge_transfer.py \
+  --student-lib path/to/libtransformer.so \
+  --tokenizer-path path/to/tokenizer \
+  --train-data path/to/training/data.txt \
+  --output-dir path/to/output
+```
+
+### Mathematical Fine-tuning
+
+```bash
+python training/finetune_math.py \
+  --model-path path/to/pretrained/model \
+  --problems-path data/math_problems.json \
+  --output-dir output/math_finetuned
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Architecture
 

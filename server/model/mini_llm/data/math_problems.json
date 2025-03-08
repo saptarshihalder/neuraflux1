@@ -1,0 +1,141 @@
+{
+    "problems": [
+        {
+            "question": "Find the eigenvalues and eigenvectors of the matrix A = [[2, 1], [1, 2]]",
+            "solution": "Eigenvalues: λ₁ = 3, λ₂ = 1; Eigenvectors: v₁ = [1, 1], v₂ = [-1, 1]",
+            "steps": [
+                "1. Set up characteristic equation: det(A - λI) = 0",
+                "2. Expand: det([[2-λ, 1], [1, 2-λ]]) = 0",
+                "3. Solve: (2-λ)² - 1 = 0",
+                "4. Simplify: λ² - 4λ + 3 = 0",
+                "5. Factor: (λ - 3)(λ - 1) = 0",
+                "6. Eigenvalues: λ₁ = 3, λ₂ = 1",
+                "7. For λ₁ = 3: [2-3, 1][x, y] = [0, 0] → x = y",
+                "8. For λ₂ = 1: [1, 1][x, y] = [0, 0] → x = -y"
+            ],
+            "latex_expr": "\\begin{bmatrix} 2 & 1 \\\\ 1 & 2 \\end{bmatrix}"
+        },
+        {
+            "question": "Solve the differential equation: y'' + 4y' + 4y = 0",
+            "solution": "y = (C₁ + C₂x)e⁻²ˣ",
+            "steps": [
+                "1. Characteristic equation: r² + 4r + 4 = 0",
+                "2. Factor: (r + 2)² = 0",
+                "3. Double root: r = -2",
+                "4. General solution form: y = (C₁ + C₂x)e^(rx)",
+                "5. Substitute r = -2: y = (C₁ + C₂x)e⁻²ˣ"
+            ],
+            "latex_expr": "y'' + 4y' + 4y = 0"
+        },
+        {
+            "question": "Find the volume of the solid obtained by rotating the region bounded by y = x², y = 2x, and the y-axis about the x-axis",
+            "solution": "V = 32π/15 cubic units",
+            "steps": [
+                "1. Find intersection points: x² = 2x → x(x-2) = 0 → x = 0, 2",
+                "2. Use washer method: V = π∫(R² - r²)dx",
+                "3. Outer radius: R = 2x",
+                "4. Inner radius: r = x²",
+                "5. Set up integral: V = π∫₀² (4x² - x⁴)dx",
+                "6. Integrate: V = π[4x³/3 - x⁵/5]₀²",
+                "7. Evaluate: V = π(32/3 - 32/5) = 32π/15"
+            ],
+            "latex_expr": "\\pi\\int_0^2 (4x^2 - x^4)dx"
+        },
+        {
+            "question": "Prove that for any positive integer n, the sum of the first n positive odd integers is n²",
+            "solution": "The sum of first n odd integers equals n²",
+            "steps": [
+                "1. First n odd integers: 1, 3, 5, ..., (2n-1)",
+                "2. Let S_n be the sum of first n odd integers",
+                "3. Use mathematical induction",
+                "4. Base case: n=1, S₁ = 1 = 1²",
+                "5. Assume true for k: S_k = k²",
+                "6. For k+1: S_(k+1) = S_k + (2(k+1)-1)",
+                "7. Substitute: k² + (2k+1)",
+                "8. Simplify: k² + 2k + 1 = (k+1)²"
+            ],
+            "latex_expr": "\\sum_{i=1}^n (2i-1) = n^2"
+        },
+        {
+            "question": "Find the residue of f(z) = z/(z² + 1)² at z = i",
+            "solution": "Res(f, i) = -i/4",
+            "steps": [
+                "1. Note that z = i is a pole of order 2",
+                "2. Use formula for residue at pole of order 2",
+                "3. Res(f, i) = lim_{z→i} d/dz[(z-i)²f(z)]",
+                "4. Let g(z) = (z-i)²·z/(z²+1)²",
+                "5. Apply quotient rule",
+                "6. Evaluate limit as z→i",
+                "7. Simplify complex expression"
+            ],
+            "latex_expr": "\\text{Res}_{z=i}\\frac{z}{(z^2+1)^2}"
+        },
+        {
+            "question": "Find the general solution to the partial differential equation: u_xx + u_yy = 0",
+            "solution": "u(x,y) = f(x+iy) + g(x-iy) where f and g are arbitrary differentiable functions",
+            "steps": [
+                "1. This is Laplace's equation in 2D",
+                "2. Introduce complex variables: z = x + iy, w = x - iy",
+                "3. Transform derivatives to z,w coordinates",
+                "4. Note that any analytic function satisfies Cauchy-Riemann",
+                "5. General solution involves arbitrary functions of z and w",
+                "6. Express in terms of x,y: u(x,y) = f(x+iy) + g(x-iy)"
+            ],
+            "latex_expr": "\\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} = 0"
+        },
+        {
+            "question": "Calculate the limit: lim_{n→∞} (1 + 1/n)^n",
+            "solution": "e",
+            "steps": [
+                "1. Let a_n = (1 + 1/n)^n",
+                "2. Take ln of sequence: ln(a_n) = n·ln(1 + 1/n)",
+                "3. Use Taylor series: ln(1+x) = x - x²/2 + x³/3 - ...",
+                "4. Substitute x = 1/n",
+                "5. Analyze terms as n→∞",
+                "6. Show sequence converges to 1",
+                "7. Therefore, original sequence converges to e"
+            ],
+            "latex_expr": "\\lim_{n\\to\\infty} (1 + \\frac{1}{n})^n"
+        },
+        {
+            "question": "Find the Fourier series of f(x) = x² on [-π,π]",
+            "solution": "π²/3 + Σ_{n=1}^∞ 4(-1)^n/n² cos(nx)",
+            "steps": [
+                "1. Calculate a₀: a₀ = 1/π ∫_{-π}^π x² dx = 2π²/3",
+                "2. Calculate aₙ: aₙ = 1/π ∫_{-π}^π x² cos(nx) dx = 4(-1)^n/n²",
+                "3. Calculate bₙ: bₙ = 1/π ∫_{-π}^π x² sin(nx) dx = 0",
+                "4. Combine terms: f(x) = π²/3 + Σ 4(-1)^n/n² cos(nx)"
+            ],
+            "latex_expr": "f(x) = \\frac{\\pi^2}{3} + \\sum_{n=1}^\\infty \\frac{4(-1)^n}{n^2} \\cos(nx)"
+        },
+        {
+            "question": "Prove that in a finite-dimensional vector space V, any two bases have the same number of elements",
+            "solution": "The number of elements in any basis of V is equal to dim(V)",
+            "steps": [
+                "1. Let B₁ = {v₁,...,vₙ} and B₂ = {w₁,...,wₘ} be bases",
+                "2. Express each wⱼ as linear combination of vᵢ",
+                "3. Form matrix A of coefficients",
+                "4. Express each vᵢ as linear combination of wⱼ",
+                "5. Form matrix B of coefficients",
+                "6. Note that AB = Iₙ and BA = Iₘ",
+                "7. By rank-nullity theorem, n = m"
+            ],
+            "latex_expr": "\\dim(V) = |B_1| = |B_2|"
+        },
+        {
+            "question": "Find the maximum value of f(x,y) = 2x² + 3y² subject to the constraint g(x,y) = x² + y² = 1",
+            "solution": "Maximum value is 3 at (0,±1)",
+            "steps": [
+                "1. Use method of Lagrange multipliers",
+                "2. Set up Lagrangian: L = 2x² + 3y² - λ(x² + y² - 1)",
+                "3. Take partial derivatives: ∂L/∂x = 4x - 2λx = 0",
+                "4. ∂L/∂y = 6y - 2λy = 0",
+                "5. Solve: x = 0 or λ = 2; y = 0 or λ = 3",
+                "6. Use constraint: x² + y² = 1",
+                "7. Critical points: (±1,0) and (0,±1)",
+                "8. Evaluate f at critical points"
+            ],
+            "latex_expr": "\\max_{x^2 + y^2 = 1} (2x^2 + 3y^2)"
+        }
+    ]
+} 

@@ -68,6 +68,39 @@ class BPETokenizer:
         # Start vocabulary with basic bytes (characters)
         self._initialize_base_vocab()
     
+    def add_token(self, token: str) -> int:
+        """
+        Add a new token to the vocabulary.
+        
+        Args:
+            token: The token to add
+            
+        Returns:
+            The ID of the token (new or existing)
+        """
+        if token in self.vocab:
+            # Token already exists
+            return self.vocab[token]
+        
+        # Add new token with the next available ID
+        new_id = len(self.vocab)
+        self.vocab[token] = new_id
+        self.id_to_token[new_id] = token
+        
+        return new_id
+    
+    def add_tokens(self, tokens: List[str]) -> List[int]:
+        """
+        Add multiple tokens to the vocabulary.
+        
+        Args:
+            tokens: List of tokens to add
+            
+        Returns:
+            List of token IDs (new or existing)
+        """
+        return [self.add_token(token) for token in tokens]
+    
     def _initialize_base_vocab(self):
         """Initialize the vocabulary with basic byte values."""
         # Add single byte tokens (0-255)
@@ -298,63 +331,86 @@ class BPETokenizer:
     
     def save(self, directory: str) -> None:
         """
-        Save the tokenizer to a directory.
+        Save the tokenizer to disk.
         
         Args:
-            directory: The directory to save to
+            directory: Directory where to save tokenizer files
         """
         os.makedirs(directory, exist_ok=True)
         
         # Save vocabulary
-        with open(os.path.join(directory, "vocab.json"), "w", encoding="utf-8") as f:
-            json.dump(self.vocab, f, ensure_ascii=False)
-        
+        vocab_path = os.path.join(directory, "vocab.json")
+        with open(vocab_path, "w", encoding="utf-8") as f:
+            json.dump(self.vocab, f, ensure_ascii=False, indent=2)
+            
         # Save merges
-        with open(os.path.join(directory, "merges.json"), "w", encoding="utf-8") as f:
-            # Convert tuple keys to lists for JSON serialization
-            serializable_merges = {str(k): v for k, v in self.merges.items()}
-            json.dump(serializable_merges, f, ensure_ascii=False)
-        
+        merges_path = os.path.join(directory, "merges.json")
+        merges_dict = {" ".join(pair): merged for pair, merged in self.merges.items()}
+        with open(merges_path, "w", encoding="utf-8") as f:
+            json.dump(merges_dict, f, ensure_ascii=False, indent=2)
+            
         # Save special tokens
-        with open(os.path.join(directory, "special_tokens.json"), "w", encoding="utf-8") as f:
-            json.dump(self.special_tokens, f, ensure_ascii=False)
+        special_tokens_path = os.path.join(directory, "special_tokens.json")
+        with open(special_tokens_path, "w", encoding="utf-8") as f:
+            json.dump(self.special_tokens, f, ensure_ascii=False, indent=2)
+            
+        # Save configuration
+        config_path = os.path.join(directory, "config.json")
+        config = {
+            "vocab_size": self.vocab_size,
+            "min_frequency": self.min_frequency
+        }
+        with open(config_path, "w", encoding="utf-8") as f:
+            json.dump(config, f, ensure_ascii=False, indent=2)
     
     @classmethod
     def load(cls, directory: str) -> 'BPETokenizer':
         """
-        Load a tokenizer from a directory.
+        Load a tokenizer from disk.
         
         Args:
-            directory: The directory to load from
+            directory: Directory containing the tokenizer files
             
         Returns:
-            Loaded BPETokenizer
+            BPETokenizer: Loaded tokenizer
         """
+        # Load configuration
+        config_path = os.path.join(directory, "config.json")
+        if os.path.exists(config_path):
+            with open(config_path, "r", encoding="utf-8") as f:
+                config = json.load(f)
+        else:
+            config = {"vocab_size": 30000, "min_frequency": 2}
+            
         # Load special tokens
-        with open(os.path.join(directory, "special_tokens.json"), "r", encoding="utf-8") as f:
-            special_tokens = json.load(f)
-        
+        special_tokens_path = os.path.join(directory, "special_tokens.json")
+        if os.path.exists(special_tokens_path):
+            with open(special_tokens_path, "r", encoding="utf-8") as f:
+                special_tokens = json.load(f)
+        else:
+            special_tokens = None
+            
         # Create tokenizer instance
-        tokenizer = cls(special_tokens=special_tokens)
+        tokenizer = cls(
+            vocab_size=config.get("vocab_size", 30000),
+            min_frequency=config.get("min_frequency", 2),
+            special_tokens=special_tokens
+        )
         
         # Load vocabulary
-        with open(os.path.join(directory, "vocab.json"), "r", encoding="utf-8") as f:
+        vocab_path = os.path.join(directory, "vocab.json")
+        with open(vocab_path, "r", encoding="utf-8") as f:
             tokenizer.vocab = json.load(f)
-            # Update id_to_token mapping
-            tokenizer.id_to_token = {int(v): k for k, v in tokenizer.vocab.items()}
+            
+        # Set up reverse mapping
+        tokenizer.id_to_token = {v: k for k, v in tokenizer.vocab.items()}
         
         # Load merges
-        with open(os.path.join(directory, "merges.json"), "r", encoding="utf-8") as f:
-            serialized_merges = json.load(f)
-            # Convert string keys back to tuples
-            tokenizer.merges = {}
-            for k, v in serialized_merges.items():
-                # Remove brackets and split by comma
-                parts = k.strip("()").split(", ")
-                # Remove quotes
-                parts = [p.strip("'\"") for p in parts]
-                tokenizer.merges[tuple(parts)] = v
-        
+        merges_path = os.path.join(directory, "merges.json")
+        with open(merges_path, "r", encoding="utf-8") as f:
+            merges_dict = json.load(f)
+            tokenizer.merges = {tuple(k.split()): v for k, v in merges_dict.items()}
+            
         return tokenizer
 
 # Example usage
