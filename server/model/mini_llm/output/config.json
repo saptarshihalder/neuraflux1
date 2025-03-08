@@ -1,0 +1,14 @@
+{
+  "vocab_size": 30000,
+  "hidden_size": 384,
+  "num_layers": 6,
+  "num_heads": 6,
+  "intermediate_size": 1536,
+  "max_seq_length": 512,
+  "dropout": 0.1,
+  "activation": "gelu",
+  "use_glu": true,
+  "use_rope": true,
+  "window_size": 256,
+  "use_sliding_window": true
+} 
