@@ -1,0 +1,219 @@
+A complete sentence must have a subject and a predicate.
+The subject is the person or thing the sentence is about.
+The predicate describes what the subject does or is.
+Every complete sentence begins with a capital letter and ends with punctuation.
+Declarative sentences make statements and end with periods.
+Interrogative sentences ask questions and end with question marks.
+Imperative sentences give commands and end with periods or exclamation points.
+Exclamatory sentences express strong emotion and end with exclamation points.
+A simple sentence contains one independent clause.
+A compound sentence contains two or more independent clauses joined by a conjunction.
+A complex sentence contains an independent clause and one or more dependent clauses.
+A compound-complex sentence contains multiple independent clauses and at least one dependent clause.
+Nouns name people, places, things, or ideas.
+Common nouns name general people, places, things, or ideas.
+Proper nouns name specific people, places, things, or ideas and are capitalized.
+Concrete nouns name things you can perceive with your five senses.
+Abstract nouns name things you cannot perceive with your five senses.
+Collective nouns name groups of people or things.
+Count nouns can be counted and have both singular and plural forms.
+Mass nouns cannot be counted and typically have only singular forms.
+Singular nouns name one person, place, thing, or idea.
+Plural nouns name more than one person, place, thing, or idea.
+Most nouns form their plurals by adding -s or -es.
+Some nouns have irregular plural forms.
+Possessive nouns show ownership and usually form by adding an apostrophe and s.
+Pronouns take the place of nouns.
+Personal pronouns refer to specific people or things.
+Subject pronouns act as the subject of a sentence.
+Object pronouns receive the action in a sentence.
+Possessive pronouns show ownership.
+Reflexive pronouns refer back to the subject of the sentence.
+Demonstrative pronouns point out specific people, places, things, or ideas.
+Relative pronouns introduce clauses that describe nouns.
+Indefinite pronouns refer to nonspecific people or things.
+Verbs express actions, occurrences, or states of being.
+Action verbs express physical or mental activity.
+Linking verbs connect the subject to information about the subject.
+Helping verbs (auxiliary verbs) help the main verb express action or state of being.
+Verb tenses indicate when the action takes place.
+Present tense verbs express actions happening now.
+Past tense verbs express actions that happened before now.
+Future tense verbs express actions that will happen later.
+Perfect tenses include present perfect, past perfect, and future perfect.
+Progressive tenses show continuing action.
+Regular verbs form their past tense and past participle by adding -ed.
+Irregular verbs have special forms for past tense and past participle.
+Adjectives modify or describe nouns and pronouns.
+Adjectives answer the questions: Which one? What kind? How many? How much?
+Articles are special adjectives: "a," "an," and "the."
+Proper adjectives are derived from proper nouns and are capitalized.
+Comparative adjectives compare two things.
+Superlative adjectives compare three or more things.
+Adverbs modify verbs, adjectives, or other adverbs.
+Adverbs often end in -ly.
+Adverbs answer the questions: When? Where? How? To what extent?
+Conjunctions connect words, phrases, or clauses.
+Coordinating conjunctions (FANBOYS) connect equal elements.
+Subordinating conjunctions connect independent and dependent clauses.
+Correlative conjunctions work in pairs to connect equal elements.
+Prepositions show relationships between words in a sentence.
+Prepositional phrases begin with prepositions and end with objects.
+Interjections express emotion and are followed by exclamation points or commas.
+Subject-verb agreement means subjects and verbs must agree in number.
+Singular subjects take singular verbs.
+Plural subjects take plural verbs.
+Compound subjects joined by "and" usually take plural verbs.
+Compound subjects joined by "or" or "nor" take a verb that agrees with the nearest subject.
+Parallel structure means using the same pattern of words for concepts of equal importance.
+Sentence fragments are incomplete sentences missing a subject, verb, or complete thought.
+Run-on sentences contain two or more independent clauses improperly joined.
+Comma splices join independent clauses with just a comma.
+The Oxford comma is the comma before the conjunction in a series of three or more items.
+Active voice emphasizes the subject performing the action.
+Passive voice emphasizes the action's recipient rather than the performer.
+Misplaced modifiers are words, phrases, or clauses that are improperly separated from the words they modify.
+Dangling modifiers modify subjects that aren't clearly stated in the sentence.
+Double negatives use two negative words in the same clause and are generally avoided in standard English.
+Homonyms are words that sound the same but have different meanings.
+Homophones are words that sound the same but have different spellings and meanings.
+Homographs are words that are spelled the same but have different meanings.
+Synonyms are words that have similar meanings.
+Antonyms are words that have opposite meanings.
+Idioms are expressions whose meanings cannot be determined by the literal meaning of their words.
+Clichés are overused expressions that have lost their impact.
+Euphemisms are mild or indirect words substituted for harsh or unpleasant ones.
+The English language uses subject-verb-object (SVO) word order in simple declarative sentences.
+Questions often use subject-verb inversion.
+Imperative sentences often begin with verbs.
+Conditional sentences express hypothetical situations and their consequences.
+The first conditional uses present tense in the if-clause and future tense in the main clause.
+The second conditional uses past tense in the if-clause and would/could/might in the main clause.
+The third conditional uses past perfect in the if-clause and would/could/might have in the main clause.
+Reported speech refers to reporting what someone else said without using their exact words.
+Direct speech quotes the exact words spoken, using quotation marks.
+Modal verbs express possibility, necessity, or obligation.
+Gerunds are verb forms ending in -ing that function as nouns.
+Infinitives are the base form of a verb, usually preceded by "to."
+Participles are verb forms that function as adjectives.
+Present participles end in -ing.
+Past participles often end in -ed for regular verbs.
+Appositives are nouns or noun phrases that rename other nouns.
+Restrictive clauses provide essential information and are not set off by commas.
+Nonrestrictive clauses provide nonessential information and are set off by commas.
+Colons introduce lists, explanations, or elaborations.
+Semicolons join related independent clauses or items in a complex list.
+Hyphens join compound words or break words at the end of a line.
+En dashes connect words expressing a range or connect open compounds.
+Em dashes set off parenthetical elements with more emphasis than commas or parentheses.
+Parentheses enclose supplemental information.
+Brackets indicate changes made to quotations.
+Apostrophes indicate possession or contraction.
+Quotation marks enclose direct quotations or titles of short works.
+Single quotation marks enclose quotations within quotations.
+The subjunctive mood expresses hypothetical situations, wishes, or commands.
+The indicative mood expresses facts or opinions.
+The imperative mood expresses commands or requests.
+Concord is the agreement between different parts of a sentence.
+Ellipsis refers to the omission of words that are understood from context.
+Cataphora refers to a word or phrase that refers to a later word or phrase.
+Anaphora refers to a word or phrase that refers to an earlier word or phrase.
+Denotation is the literal or dictionary meaning of a word.
+Connotation is the emotional or cultural association of a word beyond its literal meaning.
+Register refers to the level of formality in language.
+Jargon is specialized language used by specific groups or professions.
+Colloquialisms are informal expressions used in everyday language.
+Slang is very informal language that is usually specific to a particular group or time period.
+Euphony refers to the pleasant sound of language.
+Cacophony refers to the harsh or discordant sound of language.
+Alliteration is the repetition of initial consonant sounds.
+Assonance is the repetition of vowel sounds.
+Consonance is the repetition of consonant sounds.
+Onomatopoeia refers to words that imitate the sounds they represent.
+Personification attributes human qualities to nonhuman things.
+Metaphor compares two unlike things without using "like" or "as."
+Simile compares two unlike things using "like" or "as."
+Hyperbole is deliberate exaggeration for effect.
+Litotes is deliberate understatement for effect.
+Irony involves saying one thing but meaning another.
+Oxymoron combines contradictory terms.
+Paradox is a statement that seems contradictory but may be true.
+Rhetorical questions are asked for effect, not to elicit an answer.
+The subject is typically placed before the verb in English sentences.
+English uses determiners (such as articles, demonstratives, possessives) before nouns.
+Adjectives typically precede the nouns they modify in English.
+The past perfect tense is formed with "had" plus the past participle.
+The future perfect tense is formed with "will have" plus the past participle.
+The present perfect continuous tense is formed with "has/have been" plus the present participle.
+The past perfect continuous tense is formed with "had been" plus the present participle.
+The future perfect continuous tense is formed with "will have been" plus the present participle.
+Tag questions are short questions added to the end of statements.
+Wh-questions begin with who, what, where, when, why, or how.
+Yes-no questions can be answered with yes or no.
+Alternative questions present options connected by "or."
+Hypothetical questions speculate about imaginary situations.
+Rhetorical questions are asked for effect rather than to elicit information.
+Leading questions subtly guide the respondent toward a particular answer.
+Open questions allow for detailed responses beyond yes or no.
+Closed questions typically elicit short, factual answers.
+English uses rising intonation for yes-no questions.
+English uses falling intonation for wh-questions and statements.
+Standard English refers to the formal, educated version of English.
+Dialects are varieties of a language specific to particular regions or social groups.
+Accents refer to distinctive pronunciations characteristic of specific regions or groups.
+Pidgins are simplified languages that develop for communication between groups with different native languages.
+Creoles are pidgins that have become native languages for communities.
+American English and British English are major varieties with distinctive vocabulary, spelling, and grammar.
+In American English, collective nouns typically take singular verbs.
+In British English, collective nouns can take singular or plural verbs depending on emphasis.
+American English uses -ize in words like "organize," while British English often uses -ise.
+British English retains some spelling patterns from French, such as "colour" and "centre."
+American English has simplified some spellings, as in "color" and "center."
+Phrasal verbs combine verbs with prepositions or adverbs to create new meanings.
+Separable phrasal verbs allow objects to come between the verb and particle.
+Inseparable phrasal verbs keep the verb and particle together.
+Inflection refers to changes in word forms to express grammatical functions.
+Derivation refers to the formation of new words by adding affixes to base words.
+Prefixes are added to the beginning of words to modify their meaning.
+Suffixes are added to the end of words to modify their meaning or change their part of speech.
+Compound words are formed by combining two or more words.
+Closed compounds are written as single words (e.g., "notebook").
+Hyphenated compounds use hyphens between words (e.g., "mother-in-law").
+Open compounds have space between words (e.g., "coffee table").
+Portmanteau words blend parts of multiple words (e.g., "brunch" from breakfast and lunch).
+Palindromes read the same backward and forward.
+Acronyms are formed from the initial letters of a phrase and pronounced as words.
+Initialisms are formed from the initial letters of a phrase and pronounced as individual letters.
+Abbreviations are shortened forms of words or phrases.
+Contractions combine two words, replacing some letters with an apostrophe.
+Syntax refers to the rules for arranging words into sentences.
+Morphology refers to the study of word formation and structure.
+Phonology refers to the study of sound patterns in language.
+Semantics refers to the study of meaning in language.
+Pragmatics refers to the study of language use in context.
+The Great Vowel Shift was a major change in pronunciation that occurred in English between 1400 and 1700.
+Code-switching involves alternating between two or more languages or language varieties.
+Diglossia refers to situations where two varieties of a language exist side by side.
+Prescriptive grammar dictates how language should be used.
+Descriptive grammar describes how language is actually used.
+Split infinitives place words (usually adverbs) between "to" and the verb.
+Ending sentences with prepositions is acceptable in modern English despite traditional rules against it.
+Linking words connect ideas within and between sentences to improve coherence.
+Transition words guide readers through the logical flow of a text.
+Coherence refers to the logical connection of ideas in a text.
+Cohesion refers to the grammatical and lexical connections that hold a text together.
+Reference words (such as pronouns) point to information elsewhere in the text.
+Substitution replaces words to avoid repetition.
+Ellipsis omits words that can be understood from context.
+Conjunction uses linking words to connect ideas.
+Lexical cohesion uses related vocabulary to connect ideas.
+The active reading process involves predicting, questioning, clarifying, and summarizing.
+Context clues help readers determine the meaning of unfamiliar words.
+Paraphrasing restates ideas in different words.
+Summarizing condenses a text to its main points.
+Inferences are logical conclusions based on evidence and reasoning.
+Main ideas capture the central point of a text.
+Supporting details provide evidence for main ideas.
+Author's purpose may be to inform, persuade, entertain, or explain.
+Tone reflects the author's attitude toward the subject.
+Mood is the atmosphere or emotion created by the text. 

@@ -1,0 +1,221 @@
+INCORRECT: She don't like chocolate cake.
+CORRECT: She doesn't like chocolate cake.
+
+INCORRECT: The children plays in the park every day.
+CORRECT: The children play in the park every day.
+
+INCORRECT: He have visited many countries.
+CORRECT: He has visited many countries.
+
+INCORRECT: The book who I read was interesting.
+CORRECT: The book that I read was interesting.
+
+INCORRECT: She did good on her exam.
+CORRECT: She did well on her exam.
+
+INCORRECT: Me and my friend went to the movies.
+CORRECT: My friend and I went to the movies.
+
+INCORRECT: I seen the new movie yesterday.
+CORRECT: I saw the new movie yesterday.
+
+INCORRECT: He go to the gym three times a week.
+CORRECT: He goes to the gym three times a week.
+
+INCORRECT: They was happy about the news.
+CORRECT: They were happy about the news.
+
+INCORRECT: The cat licked it's paws.
+CORRECT: The cat licked its paws.
+
+INCORRECT: She is more taller than her sister.
+CORRECT: She is taller than her sister.
+
+INCORRECT: The committee have decided to approve the proposal.
+CORRECT: The committee has decided to approve the proposal.
+
+INCORRECT: Me and him are going to the concert.
+CORRECT: He and I are going to the concert.
+
+INCORRECT: Between you and I, the meeting was a disaster.
+CORRECT: Between you and me, the meeting was a disaster.
+
+INCORRECT: I should of studied harder for the test.
+CORRECT: I should have studied harder for the test.
+
+INCORRECT: The teacher teached us grammar yesterday.
+CORRECT: The teacher taught us grammar yesterday.
+
+INCORRECT: She don't have no money.
+CORRECT: She doesn't have any money.
+
+INCORRECT: Him and her are getting married next month.
+CORRECT: He and she are getting married next month.
+
+INCORRECT: We was planning to attend the conference.
+CORRECT: We were planning to attend the conference.
+
+INCORRECT: The dog wagged it's tail.
+CORRECT: The dog wagged its tail.
+
+INCORRECT: She is the most prettiest girl in the class.
+CORRECT: She is the prettiest girl in the class.
+
+INCORRECT: There going to announce the results tomorrow.
+CORRECT: They're going to announce the results tomorrow.
+
+INCORRECT: The book is laying on the table.
+CORRECT: The book is lying on the table.
+
+INCORRECT: He did not wanted to go to the party.
+CORRECT: He did not want to go to the party.
+
+INCORRECT: My sister she works at a hospital.
+CORRECT: My sister works at a hospital.
+
+INCORRECT: The data show that there is less students enrolling this year.
+CORRECT: The data show that there are fewer students enrolling this year.
+
+INCORRECT: Everyone have their own opinion.
+CORRECT: Everyone has their own opinion.
+
+INCORRECT: Him and me went to the store.
+CORRECT: He and I went to the store.
+
+INCORRECT: I'm going to lay down for a nap.
+CORRECT: I'm going to lie down for a nap.
+
+INCORRECT: They wasn't interested in our proposal.
+CORRECT: They weren't interested in our proposal.
+
+INCORRECT: She walks quickly than her brother.
+CORRECT: She walks more quickly than her brother.
+
+INCORRECT: Ten dollars are too much for that book.
+CORRECT: Ten dollars is too much for that book.
+
+INCORRECT: The company have announced a new policy.
+CORRECT: The company has announced a new policy.
+
+INCORRECT: I seen that movie last week.
+CORRECT: I saw that movie last week.
+
+INCORRECT: Your going to love this restaurant.
+CORRECT: You're going to love this restaurant.
+
+INCORRECT: Each of the students have submitted their assignments.
+CORRECT: Each of the students has submitted their assignment.
+
+INCORRECT: Me neither.
+CORRECT: I neither.
+
+INCORRECT: She invited my husband and I to dinner.
+CORRECT: She invited my husband and me to dinner.
+
+INCORRECT: We was hoping for better weather.
+CORRECT: We were hoping for better weather.
+
+INCORRECT: The team played good despite the challenging conditions.
+CORRECT: The team played well despite the challenging conditions.
+
+INCORRECT: This is the most unique experience I've ever had.
+CORRECT: This is a unique experience I've ever had.
+
+INCORRECT: The data indicates that the economy is improving.
+CORRECT: The data indicate that the economy is improving.
+
+INCORRECT: I could care less about the outcome.
+CORRECT: I couldn't care less about the outcome.
+
+INCORRECT: The man which lives next door is a doctor.
+CORRECT: The man who lives next door is a doctor.
+
+INCORRECT: My brother is more taller than me.
+CORRECT: My brother is taller than I am.
+
+INCORRECT: I'll try and finish the report by tomorrow.
+CORRECT: I'll try to finish the report by tomorrow.
+
+INCORRECT: She had laid on the beach all afternoon.
+CORRECT: She had lain on the beach all afternoon.
+
+INCORRECT: Neither of the candidates are qualified for the position.
+CORRECT: Neither of the candidates is qualified for the position.
+
+INCORRECT: The table needs repaired.
+CORRECT: The table needs to be repaired.
+
+INCORRECT: We celebrated her and I's anniversary.
+CORRECT: We celebrated her and my anniversary.
+
+INCORRECT: One of the student are missing.
+CORRECT: One of the students is missing.
+
+INCORRECT: It's raining outside, isn't it?
+CORRECT: It's raining outside, isn't it?
+
+INCORRECT: Do you know where is the library?
+CORRECT: Do you know where the library is?
+
+INCORRECT: The number of accidents have decreased.
+CORRECT: The number of accidents has decreased.
+
+INCORRECT: My sister, whose a doctor, works at the local hospital.
+CORRECT: My sister, who's a doctor, works at the local hospital.
+
+INCORRECT: Every boy and girl are required to attend the assembly.
+CORRECT: Every boy and girl is required to attend the assembly.
+
+INCORRECT: Him and her have been friends for years.
+CORRECT: He and she have been friends for years.
+
+INCORRECT: Five years are a long time to be away from home.
+CORRECT: Five years is a long time to be away from home.
+
+INCORRECT: She lied the book on the table.
+CORRECT: She laid the book on the table.
+
+INCORRECT: If I would have known, I would have told you.
+CORRECT: If I had known, I would have told you.
+
+INCORRECT: It's not that difficult of a problem.
+CORRECT: It's not that difficult a problem.
+
+INCORRECT: She don't never go to parties.
+CORRECT: She never goes to parties.
+
+INCORRECT: I borrowed the book off of my friend.
+CORRECT: I borrowed the book from my friend.
+
+INCORRECT: You have to balance good between work and leisure.
+CORRECT: You have to balance well between work and leisure.
+
+INCORRECT: Who did you give the money to?
+CORRECT: To whom did you give the money?
+
+INCORRECT: If I was you, I would accept the offer.
+CORRECT: If I were you, I would accept the offer.
+
+INCORRECT: The office building is real tall.
+CORRECT: The office building is really tall.
+
+INCORRECT: She recommended that he goes to the doctor.
+CORRECT: She recommended that he go to the doctor.
+
+INCORRECT: Less people attended the event than expected.
+CORRECT: Fewer people attended the event than expected.
+
+INCORRECT: Each of the employees are entitled to a bonus.
+CORRECT: Each of the employees is entitled to a bonus.
+
+INCORRECT: Wait for your father and I.
+CORRECT: Wait for your father and me.
+
+INCORRECT: We waited on the train for two hours.
+CORRECT: We waited for the train for two hours.
+
+INCORRECT: I'm not as tall like my brother.
+CORRECT: I'm not as tall as my brother.
+
+INCORRECT: That's the man who I told you about.
+CORRECT: That's the man about whom I told you. 
