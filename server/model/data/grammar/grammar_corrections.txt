@@ -218,4 +218,91 @@ INCORRECT: I'm not as tall like my brother.
 CORRECT: I'm not as tall as my brother.
 
 INCORRECT: That's the man who I told you about.
-CORRECT: That's the man about whom I told you. 
+CORRECT: That's the man about whom I told you.
+
+INCORRECT: she don't like apples
+CORRECT: she doesn't like apples
+
+INCORRECT: me and my friend went to the store
+CORRECT: my friend and I went to the store
+
+INCORRECT: i seen that movie last week
+CORRECT: I saw that movie last week
+
+INCORRECT: they was happy about the news
+CORRECT: they were happy about the news
+
+INCORRECT: the dog wagged it's tail
+CORRECT: the dog wagged its tail
+
+INCORRECT: she is more prettier than her sister
+CORRECT: she is prettier than her sister
+
+INCORRECT: him and her are going to the party
+CORRECT: he and she are going to the party
+
+INCORRECT: there going to be late
+CORRECT: they're going to be late
+
+INCORRECT: he is laying on the couch
+CORRECT: he is lying on the couch
+
+INCORRECT: I should of done my homework
+CORRECT: I should have done my homework
+
+INCORRECT: me and him talked
+CORRECT: he and I talked
+
+INCORRECT: I ain't got no money
+CORRECT: I don't have any money
+
+INCORRECT: I could care less
+CORRECT: I couldn't care less
+
+INCORRECT: between you and I
+CORRECT: between you and me
+
+INCORRECT: she did good on the test
+CORRECT: she did well on the test
+
+INCORRECT: the reason is because
+CORRECT: the reason is that
+
+INCORRECT: irregardless of what you think
+CORRECT: regardless of what you think
+
+INCORRECT: I would of come
+CORRECT: I would have come
+
+INCORRECT: can I go to the bathroom
+CORRECT: may I go to the bathroom
+
+INCORRECT: its' going to rain
+CORRECT: it's going to rain
+
+INCORRECT: try and do better
+CORRECT: try to do better
+
+INCORRECT: less people showed up
+CORRECT: fewer people showed up
+
+INCORRECT: your the best
+CORRECT: you're the best
+
+INCORRECT: who did you give it to?
+CORRECT: to whom did you give it?
+
+INCORRECT: him and me went shopping
+CORRECT: he and I went shopping
+
+INCORRECT: we was at the store
+CORRECT: we were at the store
+
+INCORRECT: this is suppose to work
+CORRECT: this is supposed to work
+
+INCORRECT: where you at?
+CORRECT: where are you?
+
+INCORRECT: I don't got no time
+CORRECT: I don't have any time 

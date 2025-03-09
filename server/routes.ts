@@ -1,111 +1,147 @@
-import type { Express } from "express";
-import { createServer, type Server } from "http";
-import { WebSocketServer, WebSocket } from "ws";
+import Express from 'express';
+import { Server as HttpServer } from 'http';
+import { WebSocketServer, WebSocket } from 'ws';
 import { storage } from "./storage";
 import { insertMessageSchema } from "@shared/schema";
-import { spawn } from "child_process";
-import fetch from "node-fetch";
+import { spawn } from 'child_process';
+import path from 'path';
+import fetch from 'node-fetch';
 
-const PERCHANCE_BASE_URL = "https://perchance.org/api/generators";
-
-async function getPerchanceResponse(prompt: string): Promise<string> {
-  try {
-    // Use more sophisticated generators based on the type of question
-    const generators = [
-      'writing-prompt-generator',
-      'ai-conversation',
-      'random-sentence'
-    ];
-
-    const responses = await Promise.all(
-      generators.map(async (generator) => {
-        const response = await fetch(`${PERCHANCE_BASE_URL}/${generator}/generate`);
-        if (!response.ok) return null;
-        const data = await response.json() as { text?: string };
-        return data.text;
-      })
-    );
-
-    // Filter out null responses and get the first valid one
-    const validResponses = responses.filter(r => r !== null);
-    if (validResponses.length > 0) {
-      return validResponses[0] || "I apologize, I'm still learning how to respond to that type of question.";
-    }
-
-    return "I apologize, I'm having trouble understanding that. Could you try rephrasing your question?";
-  } catch (error) {
-    console.error("Perchance API error:", error);
-    return "I apologize, I'm having trouble understanding that. Could you try rephrasing your question?";
-  }
+interface WebSocketWithID extends WebSocket {
+    id: string;
 }
 
-export async function registerRoutes(app: Express): Promise<Server> {
-  const httpServer = createServer(app);
-  const wss = new WebSocketServer({ server: httpServer, path: '/chatws' });
+interface PerchanceResponse {
+    result?: string;
+    [key: string]: any;
+}
 
-  // Spawn Python model process once and keep it running
-  const pythonProcess = spawn("python3", ["server/model/nanorag.py"], {
-    stdio: ["pipe", "pipe", "pipe"]
-  });
-
-  pythonProcess.stderr.on("data", (data) => {
-    console.log(`Model log: ${data}`);
-  });
-
-  app.get("/api/messages", async (_req, res) => {
-    const messages = await storage.getMessages();
-    res.json(messages);
-  });
-
-  wss.on("connection", (ws: WebSocket) => {
-    console.log("New WebSocket connection established");
-
-    ws.on("message", async (data: string) => {
-      try {
-        const message = JSON.parse(data);
-        const validatedMessage = insertMessageSchema.parse(message);
-
-        // Add user message to storage
-        await storage.addMessage(validatedMessage);
-
-        // Send to Python model for processing
-        pythonProcess.stdin.write(validatedMessage.content + "\n");
-
-        // Handle model response
-        pythonProcess.stdout.once("data", async (data) => {
-          if (ws.readyState === WebSocket.OPEN) {
-            const response = data.toString().trim();
-            console.log("Model response:", response);
-
-            if (response.includes("I don't know") || response.includes("I'm sorry")) {
-              // Fallback to Perchance for unknown questions
-              const perchanceResponse = await getPerchanceResponse(validatedMessage.content);
-              ws.send(JSON.stringify({ type: "response", content: perchanceResponse }));
-            } else {
-              ws.send(JSON.stringify({ type: "response", content: response }));
-            }
-          }
+export const getPerchanceResponse = async (prompt: string) => {
+    try {
+        // Determine which generator to use based on prompt content
+        let generator = 'ai-chatbot';
+        
+        // If using math or grammar specific tags, adjust generator
+        if (prompt.toLowerCase().includes('[math question]')) {
+            generator = 'calcula';
+            prompt = prompt.replace(/\[math question\]/i, '').trim();
+        } else if (prompt.toLowerCase().includes('[grammar question]')) {
+            generator = 'grammarbot';
+            prompt = prompt.replace(/\[grammar question\]/i, '').trim();
+        }
+        
+        // Fallback to default AI chatbot for general questions
+        console.log(`Using generator: ${generator} for prompt: ${prompt}`);
+        
+        const url = `https://perchance.org/api/1/perchance/generate/${generator}`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                prompt
+            }),
         });
 
-      } catch (error: any) {
-        console.error("WebSocket error:", error);
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify({ 
-            type: "error", 
-            content: "Something went wrong. Please try again." 
-          }));
-        }
-      }
+        const data = await response.json() as PerchanceResponse;
+        return data.result || 'I do not have a response for that.';
+    } catch (error) {
+        console.error('Error calling Perchance API:', error);
+        return 'I encountered an error processing your request.';
+    }
+};
+
+export const registerRoutes = (app: Express.Express, server: HttpServer) => {
+    // Set up WebSocket server
+    const wss = new WebSocketServer({ server });
+
+    // Set up Python model process
+    const modelProcess = spawn('python', [path.join(__dirname, 'model', 'nanorag.py')]);
+    console.log('Started Python model process');
+
+    modelProcess.stderr.on('data', (data) => {
+        console.log(`Model stderr: ${data}`);
     });
 
-    ws.on("error", (error) => {
-      console.error("WebSocket error:", error);
+    // Set up WebSocket connection handler
+    wss.on('connection', (ws: WebSocketWithID) => {
+        ws.id = Math.random().toString(36).substring(2, 10);
+        console.log(`Client ${ws.id} connected`);
+
+        // Handle incoming messages
+        ws.on('message', async (message: string) => {
+            try {
+                const text = message.toString();
+
+                // Check if it's a special math or grammar question format
+                let processedMessage = text;
+                let responsePrefix = '';
+                if (text.startsWith('[MATH QUESTION]')) {
+                    processedMessage = text.replace('[MATH QUESTION]', '').trim();
+                    responsePrefix = '[Math] ';
+                    console.log('Processing math question:', processedMessage);
+                } else if (text.startsWith('[GRAMMAR QUESTION]')) {
+                    processedMessage = text.replace('[GRAMMAR QUESTION]', '').trim();
+                    responsePrefix = '[Grammar] ';
+                    console.log('Processing grammar question:', processedMessage);
+                }
+
+                // Send the message to Python model
+                modelProcess.stdin.write(processedMessage + '\n');
+
+                // Set up a listener for the Python model's response
+                const responseListener = (data: Buffer) => {
+                    const response = data.toString().trim();
+                    console.log(`Model response for client ${ws.id}: ${response}`);
+                    if (response) {
+                        ws.send(responsePrefix + response);
+                        modelProcess.stdout.removeListener('data', responseListener);
+                    }
+                };
+
+                modelProcess.stdout.on('data', responseListener);
+
+                // Set a timeout to handle no response from model
+                const timeoutId = setTimeout(() => {
+                    modelProcess.stdout.removeListener('data', responseListener);
+                    console.log(`No response from model for client ${ws.id}, using Perchance fallback`);
+                    
+                    // Fallback to Perchance API if no response from Python model
+                    getPerchanceResponse(processedMessage).then(perchanceResponse => {
+                        ws.send(responsePrefix + perchanceResponse);
+                    });
+                }, 5000); // 5 second timeout
+                
+                // Clear timeout if client disconnects
+                ws.on('close', () => {
+                    clearTimeout(timeoutId);
+                    modelProcess.stdout.removeListener('data', responseListener);
+                });
+            } catch (error) {
+                console.error('Error processing message:', error);
+                ws.send('I encountered an error processing your request.');
+            }
+        });
+
+        // Handle client disconnection
+        ws.on('close', () => {
+            console.log(`Client ${ws.id} disconnected`);
+        });
+
+        // Handle WebSocket errors
+        ws.on('error', (error) => {
+            console.error(`WebSocket error for client ${ws.id}:`, error);
+        });
     });
 
-    ws.on("close", () => {
-      console.log("WebSocket connection closed");
+    // Add routes
+    app.get('/api/health', (req, res) => {
+        res.json({ status: 'ok' });
     });
-  });
 
-  return httpServer;
-}
+    app.get("/api/messages", async (_req, res) => {
+        const messages = await storage.getMessages();
+        res.json(messages);
+    });
+};

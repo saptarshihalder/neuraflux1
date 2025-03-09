@@ -4,7 +4,7 @@
 The subjunctive mood expresses wishes, suggestions, or conditions contrary to fact.
 
 EXAMPLE: If I were president, I would lower taxes.
-EXPLANATION: "Were" is used instead of "was" in the subjunctive mood, even with singular subjects.
+EXPLANATION: The subjunctive mood uses "were" instead of "was" with singular subjects in hypothetical or contrary-to-fact situations.
 
 EXAMPLE: The teacher insisted that the student submit his paper on time.
 EXPLANATION: The subjunctive form "submit" is used after certain verbs like "insist," "recommend," "suggest," etc.
@@ -16,7 +16,7 @@ EXPLANATION: The subjunctive "were" is used after "wish" to express a situation 
 Inversion reverses the typical subject-verb order for emphasis or in specific structures.
 
 EXAMPLE: Never have I seen such beauty.
-EXPLANATION: The auxiliary verb "have" comes before the subject "I" due to the initial negative adverb.
+EXPLANATION: When a negative or restrictive adverb appears at the beginning of a sentence, the normal subject-verb order is inverted.
 
 EXAMPLE: Not only did she win the race, but she also broke the record.
 EXPLANATION: The auxiliary verb "did" comes before the subject "she" in the "not only" construction.
@@ -28,7 +28,7 @@ EXPLANATION: The auxiliary verb "had" comes before the subject "I" in this condi
 Cleft sentences emphasize certain elements by splitting the sentence into two parts.
 
 EXAMPLE: It was Jane who found the missing documents.
-EXPLANATION: This structure emphasizes that Jane (not someone else) found the documents.
+EXPLANATION: Cleft sentences highlight a particular element by splitting the sentence into two clauses with "it is/was...that/who."
 
 EXAMPLE: What I need is a good night's sleep.
 EXPLANATION: This structure emphasizes what is needed (a good night's sleep).
@@ -40,7 +40,7 @@ EXPLANATION: This structure emphasizes the reason for leaving early.
 Participial phrases use the present participle (-ing) or past participle (-ed) forms as adjectives.
 
 EXAMPLE: Walking along the beach, we saw a pod of dolphins.
-EXPLANATION: The present participle phrase "Walking along the beach" modifies "we."
+EXPLANATION: A participial phrase contains a present or past participle and acts as an adjective, often describing the subject of the main clause.
 
 EXAMPLE: Exhausted from the long journey, the travelers collapsed into their beds.
 EXPLANATION: The past participle phrase "Exhausted from the long journey" modifies "the travelers."
@@ -124,7 +124,7 @@ EXPLANATION: Expresses impossibility about a present perfect situation.
 Mixed conditionals combine different types of conditional structures.
 
 EXAMPLE: If I had studied medicine, I would be a doctor now.
-EXPLANATION: The "if" clause refers to the past, while the main clause refers to the present.
+EXPLANATION: Mixed conditionals combine different types of conditional structures, often with the past perfect in the "if" clause and the conditional in the main clause.
 
 EXAMPLE: If I were rich, I would have bought that house.
 EXPLANATION: The "if" clause refers to the present, while the main clause refers to the past.
@@ -132,44 +132,39 @@ EXPLANATION: The "if" clause refers to the present, while the main clause refers
 EXAMPLE: If you hadn't helped me then, I wouldn't be in this position now.
 EXPLANATION: The "if" clause refers to the past, while the main clause refers to the present.
 
-## Inversion in Conditionals
-Inversion can replace "if" in conditional sentences.
+## Fronting
+EXAMPLE: Beautiful though it was, the painting didn't sell.
+EXPLANATION: Fronting involves placing a word or phrase at the beginning of a sentence for emphasis or contrast.
 
-EXAMPLE: Had I known earlier, I would have told you.
-EXPLANATION: "Had I known" replaces "If I had known" through inversion.
+## Ellipsis
+EXAMPLE: Some prefer coffee; others, tea.
+EXPLANATION: Ellipsis involves omitting words that are understood from context, often to avoid repetition.
 
-EXAMPLE: Should you need any assistance, please don't hesitate to ask.
-EXPLANATION: "Should you need" replaces "If you should need" through inversion.
+## Passive Voice with Get
+EXAMPLE: The politician got elected despite the controversy.
+EXPLANATION: "Get" can be used instead of "be" in passive constructions, often implying a change of state or emphasizing the result.
 
-EXAMPLE: Were I in your position, I would accept the offer.
-EXPLANATION: "Were I" replaces "If I were" through inversion.
+## Complex Preposition Phrases
+EXAMPLE: In spite of the rain, they continued with the outdoor concert.
+EXPLANATION: Complex prepositions consist of multiple words functioning as a single preposition, creating more nuanced meanings.
 
-## Emphatic Structures
-Emphatic structures add emphasis to particular elements.
+## Causative Structures
+Causative structures express that someone causes something to happen.
 
-EXAMPLE: What I did was call the police immediately.
-EXPLANATION: This structure emphasizes the action taken.
+EXAMPLE: She had her car repaired yesterday.
+EXPLANATION: Causative structures with "have," "get," "make," etc. indicate that the subject caused something to happen without doing it themselves.
 
-EXAMPLE: Do come to the party; everyone will be there.
-EXPLANATION: The auxiliary "do" adds emphasis to the imperative.
+EXAMPLE: They got their house painted by professionals.
+EXPLANATION: They arranged for professionals to paint their house.
 
-EXAMPLE: It is in London that the final will be held.
-EXPLANATION: This structure emphasizes the location.
-
-## Nominal Relative Clauses
-Nominal relative clauses combine the functions of a noun and a relative clause.
-
-EXAMPLE: What you need is more practice.
-EXPLANATION: "What you need" functions as the subject of the sentence.
-
-EXAMPLE: Whoever arrives first will get the best seat.
-EXPLANATION: "Whoever arrives first" functions as the subject of the sentence.
-
-EXAMPLE: She gave the prize to whoever had the highest score.
-EXPLANATION: "Whoever had the highest score" functions as the object of the preposition "to."
+EXAMPLE: I need to have my teeth checked by a dentist.
+EXPLANATION: I need to arrange for a dentist to check my teeth.
 
 ## Reduced Relative Clauses
 Reduced relative clauses omit the relative pronoun and verb "be."
+
+EXAMPLE: The man sitting in the corner is my uncle.
+EXPLANATION: Relative clauses can be reduced by omitting the relative pronoun and auxiliary verb, resulting in a participial phrase.
 
 EXAMPLE: The people waiting in line looked impatient.
 EXPLANATION: "Waiting in line" is a reduced form of "who were waiting in line."
@@ -180,14 +175,18 @@ EXPLANATION: "Proposed by the committee" is a reduced form of "that was proposed
 EXAMPLE: Anyone interested should contact the manager.
 EXPLANATION: "Interested" is a reduced form of "who is interested."
 
-## Causative Structures
-Causative structures express that someone causes something to happen.
+## Nominal -ing Clauses
+EXAMPLE: Traveling to different countries broadens one's perspective.
+EXPLANATION: A gerund phrase acts as a noun in the sentence, functioning as subject, object, or complement.
 
-EXAMPLE: She had her car repaired last week.
-EXPLANATION: She didn't repair the car herself but caused someone else to do it.
+## Emphatic Do
+EXAMPLE: I do believe you're right about this.
+EXPLANATION: Adding "do" before a verb for emphasis, often in positive statements to add certainty or conviction.
 
-EXAMPLE: They got their house painted by professionals.
-EXPLANATION: They arranged for professionals to paint their house.
+## Inversion in Conditionals
+EXAMPLE: Had I known earlier, I would have told you.
+EXPLANATION: In formal conditional sentences, "if" can be omitted by inverting the subject and auxiliary verb.
 
-EXAMPLE: I need to have my teeth checked by a dentist.
-EXPLANATION: I need to arrange for a dentist to check my teeth. 
+## Negative Inversion
+EXAMPLE: Not only did she win the race, but she also set a new record.
+EXPLANATION: After expressions like "not only," "never," or "rarely" at the beginning of a sentence, the auxiliary verb comes before the subject. 
