@@ -80,6 +80,30 @@ NeuraFlux has been trained on:
 - Self-QA
 - English Grammar Dataset
 
+## Testing the Grammar Capabilities
+
+You can test the grammar capabilities using the provided test scripts:
+
+1. Test directly with the GrammarProcessor:
+   ```
+   python grammar_test.py
+   ```
+   This script tests the GrammarProcessor class directly with sample grammar questions.
+
+2. Test through the WebSocket API:
+   ```
+   node test_grammar.js
+   ```
+   This script tests the grammar processing through the WebSocket API, which mimics how the web UI communicates with the server.
+
+### Grammar Data Files
+
+The grammar processing is based on several data files in the `server/model/data/grammar` directory:
+
+- `english_grammar.txt`: Basic grammar rules and concepts
+- `grammar_corrections.txt`: Pairs of incorrect and correct grammar examples
+- `advanced_grammar.txt`: Advanced grammar structures with examples and explanations
+
 ## Contributors
 
 - Saptarshi Halder (Creator) 
