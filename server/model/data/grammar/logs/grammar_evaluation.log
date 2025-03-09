@@ -1,0 +1,3 @@
+2025-03-09 20:31:37,750 - root - INFO - Loading model and tokenizer from grammar_model
+2025-03-09 20:31:37,754 - root - INFO - Loaded tokenizer with vocab size 1297
+2025-03-09 20:31:37,754 - root - ERROR - Error during evaluation: Model config not found at grammar_model\final_model\config.json

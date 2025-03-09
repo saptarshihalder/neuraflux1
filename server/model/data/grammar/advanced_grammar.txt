@@ -1,0 +1,193 @@
+# Advanced English Grammar Structures
+
+## Subjunctive Mood
+The subjunctive mood expresses wishes, suggestions, or conditions contrary to fact.
+
+EXAMPLE: If I were president, I would lower taxes.
+EXPLANATION: "Were" is used instead of "was" in the subjunctive mood, even with singular subjects.
+
+EXAMPLE: The teacher insisted that the student submit his paper on time.
+EXPLANATION: The subjunctive form "submit" is used after certain verbs like "insist," "recommend," "suggest," etc.
+
+EXAMPLE: I wish she were here.
+EXPLANATION: The subjunctive "were" is used after "wish" to express a situation contrary to reality.
+
+## Inversion
+Inversion reverses the typical subject-verb order for emphasis or in specific structures.
+
+EXAMPLE: Never have I seen such beauty.
+EXPLANATION: The auxiliary verb "have" comes before the subject "I" due to the initial negative adverb.
+
+EXAMPLE: Not only did she win the race, but she also broke the record.
+EXPLANATION: The auxiliary verb "did" comes before the subject "she" in the "not only" construction.
+
+EXAMPLE: Had I known about the problem, I would have fixed it.
+EXPLANATION: The auxiliary verb "had" comes before the subject "I" in this conditional structure.
+
+## Cleft Sentences
+Cleft sentences emphasize certain elements by splitting the sentence into two parts.
+
+EXAMPLE: It was Jane who found the missing documents.
+EXPLANATION: This structure emphasizes that Jane (not someone else) found the documents.
+
+EXAMPLE: What I need is a good night's sleep.
+EXPLANATION: This structure emphasizes what is needed (a good night's sleep).
+
+EXAMPLE: The reason he left early was that he had another appointment.
+EXPLANATION: This structure emphasizes the reason for leaving early.
+
+## Participial Phrases
+Participial phrases use the present participle (-ing) or past participle (-ed) forms as adjectives.
+
+EXAMPLE: Walking along the beach, we saw a pod of dolphins.
+EXPLANATION: The present participle phrase "Walking along the beach" modifies "we."
+
+EXAMPLE: Exhausted from the long journey, the travelers collapsed into their beds.
+EXPLANATION: The past participle phrase "Exhausted from the long journey" modifies "the travelers."
+
+EXAMPLE: The document, signed by the president, is now legally binding.
+EXPLANATION: The past participle phrase "signed by the president" gives additional information about "the document."
+
+## Gerunds and Infinitives
+Gerunds (-ing forms used as nouns) and infinitives (to + verb) serve different grammatical functions.
+
+EXAMPLE: She enjoys swimming in the ocean.
+EXPLANATION: "Swimming" is a gerund used as the object of the verb "enjoys."
+
+EXAMPLE: He decided to study medicine.
+EXPLANATION: "To study" is an infinitive used as the object of the verb "decided."
+
+EXAMPLE: Her goal is becoming a surgeon.
+EXPLANATION: "Becoming" is a gerund used as a subject complement.
+
+## Noun Clauses
+Noun clauses function as nouns in a sentence.
+
+EXAMPLE: What she said surprised everyone.
+EXPLANATION: The clause "what she said" functions as the subject of the sentence.
+
+EXAMPLE: I don't know whether he will come.
+EXPLANATION: The clause "whether he will come" functions as the object of the verb "know."
+
+EXAMPLE: The issue is that we don't have enough time.
+EXPLANATION: The clause "that we don't have enough time" functions as a subject complement.
+
+## Adverbial Clauses
+Adverbial clauses function as adverbs, modifying verbs, adjectives, or other adverbs.
+
+EXAMPLE: Although it was raining, they decided to go for a walk.
+EXPLANATION: The clause "Although it was raining" modifies the verb "decided."
+
+EXAMPLE: She smiled when she heard the news.
+EXPLANATION: The clause "when she heard the news" modifies the verb "smiled."
+
+EXAMPLE: He works harder than anyone else does.
+EXPLANATION: The clause "than anyone else does" modifies the adverb "harder."
+
+## Relative Clauses
+Relative clauses provide additional information about a noun.
+
+EXAMPLE: The book, which I bought yesterday, is very interesting.
+EXPLANATION: The non-restrictive clause "which I bought yesterday" provides additional, non-essential information about "the book."
+
+EXAMPLE: The woman who lives next door is a doctor.
+EXPLANATION: The restrictive clause "who lives next door" is essential to identify which woman is being referred to.
+
+EXAMPLE: The house where I grew up has been demolished.
+EXPLANATION: The restrictive clause "where I grew up" is essential to identify which house is being referred to.
+
+## Passive Voice
+The passive voice emphasizes the action's recipient rather than the doer.
+
+EXAMPLE: The novel was written by a famous author.
+EXPLANATION: The object of the active voice ("a famous author wrote the novel") becomes the subject in passive voice.
+
+EXAMPLE: The project will be completed by Friday.
+EXPLANATION: The focus is on the completion of the project, not who will complete it.
+
+EXAMPLE: English is spoken in many countries.
+EXPLANATION: The emphasis is on the fact that English is spoken, not on who speaks it.
+
+## Modal Verbs for Speculation
+Modal verbs can express varying degrees of certainty about past events.
+
+EXAMPLE: He must have missed the train.
+EXPLANATION: Expresses strong certainty about a past event.
+
+EXAMPLE: She might have forgotten our appointment.
+EXPLANATION: Expresses possibility about a past event.
+
+EXAMPLE: They can't have arrived yet; it's too early.
+EXPLANATION: Expresses impossibility about a present perfect situation.
+
+## Mixed Conditionals
+Mixed conditionals combine different types of conditional structures.
+
+EXAMPLE: If I had studied medicine, I would be a doctor now.
+EXPLANATION: The "if" clause refers to the past, while the main clause refers to the present.
+
+EXAMPLE: If I were rich, I would have bought that house.
+EXPLANATION: The "if" clause refers to the present, while the main clause refers to the past.
+
+EXAMPLE: If you hadn't helped me then, I wouldn't be in this position now.
+EXPLANATION: The "if" clause refers to the past, while the main clause refers to the present.
+
+## Inversion in Conditionals
+Inversion can replace "if" in conditional sentences.
+
+EXAMPLE: Had I known earlier, I would have told you.
+EXPLANATION: "Had I known" replaces "If I had known" through inversion.
+
+EXAMPLE: Should you need any assistance, please don't hesitate to ask.
+EXPLANATION: "Should you need" replaces "If you should need" through inversion.
+
+EXAMPLE: Were I in your position, I would accept the offer.
+EXPLANATION: "Were I" replaces "If I were" through inversion.
+
+## Emphatic Structures
+Emphatic structures add emphasis to particular elements.
+
+EXAMPLE: What I did was call the police immediately.
+EXPLANATION: This structure emphasizes the action taken.
+
+EXAMPLE: Do come to the party; everyone will be there.
+EXPLANATION: The auxiliary "do" adds emphasis to the imperative.
+
+EXAMPLE: It is in London that the final will be held.
+EXPLANATION: This structure emphasizes the location.
+
+## Nominal Relative Clauses
+Nominal relative clauses combine the functions of a noun and a relative clause.
+
+EXAMPLE: What you need is more practice.
+EXPLANATION: "What you need" functions as the subject of the sentence.
+
+EXAMPLE: Whoever arrives first will get the best seat.
+EXPLANATION: "Whoever arrives first" functions as the subject of the sentence.
+
+EXAMPLE: She gave the prize to whoever had the highest score.
+EXPLANATION: "Whoever had the highest score" functions as the object of the preposition "to."
+
+## Reduced Relative Clauses
+Reduced relative clauses omit the relative pronoun and verb "be."
+
+EXAMPLE: The people waiting in line looked impatient.
+EXPLANATION: "Waiting in line" is a reduced form of "who were waiting in line."
+
+EXAMPLE: The solution proposed by the committee was rejected.
+EXPLANATION: "Proposed by the committee" is a reduced form of "that was proposed by the committee."
+
+EXAMPLE: Anyone interested should contact the manager.
+EXPLANATION: "Interested" is a reduced form of "who is interested."
+
+## Causative Structures
+Causative structures express that someone causes something to happen.
+
+EXAMPLE: She had her car repaired last week.
+EXPLANATION: She didn't repair the car herself but caused someone else to do it.
+
+EXAMPLE: They got their house painted by professionals.
+EXPLANATION: They arranged for professionals to paint their house.
+
+EXAMPLE: I need to have my teeth checked by a dentist.
+EXPLANATION: I need to arrange for a dentist to check my teeth. 
