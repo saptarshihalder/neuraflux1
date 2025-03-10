@@ -10,6 +10,7 @@ import json
 import os
 import math
 import random
+import sympy
 from typing import List, Dict, Any, Optional, Tuple, Union
 
 # Simple matrix operations without numpy/torch
@@ -99,134 +100,220 @@ class NanoTokenizer:
             self.ids_to_tokens = {v: k for k, v in self.vocab.items()}
     
     def load_vocab(self, vocab_file: str):
+        """Load vocabulary from file"""
         with open(vocab_file, 'r', encoding='utf-8') as f:
             vocab = json.load(f)
         
-        # Make sure special tokens have the correct IDs
-        self.vocab = {**{k: v for k, v in self.special_tokens.items()}, **vocab}
+        self.vocab = {**self.special_tokens}
+        for token, idx in vocab.items():
+            if token not in self.vocab:
+                self.vocab[token] = len(self.vocab)
+        
         self.ids_to_tokens = {v: k for k, v in self.vocab.items()}
-    
-    def save_vocab(self, vocab_file: str):
-        with open(vocab_file, 'w', encoding='utf-8') as f:
-            # Save vocabulary without special tokens
-            vocab_to_save = {k: v for k, v in self.vocab.items() if k not in self.special_tokens}
-            json.dump(vocab_to_save, f, ensure_ascii=False, indent=2)
-    
-    def tokenize(self, text: str) -> List[str]:
-        # Very basic tokenization - split by spaces and punctuation
-        tokens = []
-        for word in re.findall(r'\w+|[^\w\s]', text.lower()):
-            tokens.append(word)
-        return tokens
-    
-    def convert_tokens_to_ids(self, tokens: List[str]) -> List[int]:
-        return [self.vocab.get(token, self.vocab[self.unk_token]) for token in tokens]
-    
-    def convert_ids_to_tokens(self, ids: List[int]) -> List[str]:
-        return [self.ids_to_tokens.get(id, self.unk_token) for id in ids]
     
     def encode(self, text: str, add_special_tokens: bool = True) -> List[int]:
-        tokens = self.tokenize(text)
+        """Encode text to token IDs (simplified)"""
+        # Simple whitespace tokenization for demonstration
+        tokens = text.split()
+        
+        # Convert tokens to IDs
+        token_ids = []
         if add_special_tokens:
-            tokens = [self.bos_token] + tokens + [self.eos_token]
-        return self.convert_tokens_to_ids(tokens)
+            token_ids.append(self.vocab[self.bos_token])
+        
+        for token in tokens:
+            if token in self.vocab:
+                token_ids.append(self.vocab[token])
+            else:
+                token_ids.append(self.vocab[self.unk_token])
+        
+        if add_special_tokens:
+            token_ids.append(self.vocab[self.eos_token])
+        
+        return token_ids
     
     def decode(self, token_ids: List[int], skip_special_tokens: bool = True) -> str:
-        tokens = self.convert_ids_to_tokens(token_ids)
-        if skip_special_tokens:
-            tokens = [token for token in tokens if token not in self.special_tokens]
-        return ' '.join(tokens)
-    
-    def train_from_texts(self, texts: List[str], min_frequency: int = 2):
-        """Train a vocabulary from a list of texts"""
-        word_counts = {}
-        for text in texts:
-            for token in self.tokenize(text):
-                if token in word_counts:
-                    word_counts[token] += 1
-                else:
-                    word_counts[token] = 1
+        """Decode token IDs back to text"""
+        tokens = []
+        for token_id in token_ids:
+            if token_id in self.ids_to_tokens:
+                token = self.ids_to_tokens[token_id]
+                if skip_special_tokens and token in self.special_tokens:
+                    continue
+                tokens.append(token)
+            else:
+                tokens.append(self.unk_token)
         
-        # Filter by frequency and sort by count
-        word_counts = {word: count for word, count in word_counts.items() if count >= min_frequency}
-        words_sorted = sorted(word_counts.items(), key=lambda x: (-x[1], x[0]))
-        
-        # Add to vocabulary, preserving special tokens
-        vocab_size = min(self.vocab_size, len(words_sorted) + len(self.special_tokens))
-        new_words = [word for word, _ in words_sorted[:vocab_size - len(self.special_tokens)]]
-        
-        # Reset vocab with special tokens
-        self.vocab = {k: v for k, v in self.special_tokens.items()}
-        
-        # Add new words
-        for i, word in enumerate(new_words):
-            self.vocab[word] = i + len(self.special_tokens)
-        
-        self.ids_to_tokens = {v: k for k, v in self.vocab.items()}
+        return " ".join(tokens)
 
 class NanoNLPEngine:
-    """A simplified language model that demonstrates the concepts without requiring deep learning libraries"""
-    
-    def __init__(self, config: Optional[NanoConfig] = None, tokenizer: Optional[NanoTokenizer] = None):
-        self.config = config if config is not None else NanoConfig()
-        self.tokenizer = tokenizer if tokenizer is not None else NanoTokenizer(vocab_size=self.config.vocab_size)
+    def __init__(self, config: NanoConfig, tokenizer: NanoTokenizer):
+        self.config = config
+        self.tokenizer = tokenizer
         
-        # For conceptual demonstration, we'll have a simplified knowledge store
-        self.knowledge = {
-            "model_info": "NeuraFlux is a small language model with 1.45M parameters. It was created by Saptarshi Halder using transformer architecture.",
-            "architecture": "NeuraFlux uses a transformer architecture with self-attention mechanisms across 6 layers with 6 attention heads.",
-            "capabilities": "The model can generate text, answer questions, and retrieve information from its memory.",
-            "language_models": "Language models use neural networks to predict the next word in a sequence based on previous words.",
-            "transformers": "Transformers are a type of neural network architecture that uses self-attention mechanisms to process sequential data.",
-            "attention": "Attention mechanisms allow models to focus on relevant parts of the input when generating outputs.",
-            "training": "Language models are trained on large text corpora to learn patterns and relationships in language."
-        }
+        # Initialize document store for RAG
+        self.documents = []
+        self.document_embeddings = []
         
-        # For factual knowledge
-        self.facts = {
-            "capital france": "Paris is the capital of France.",
-            "largest planet": "Jupiter is the largest planet in our solar system.",
-            "tallest mountain": "Mount Everest is the tallest mountain on Earth.",
-            "hamlet author": "William Shakespeare wrote Hamlet.",
-            "nile river": "The Nile is the longest river in the world.",
-            "human bones": "The adult human body has 206 bones.",
-            "dna stands for": "DNA stands for deoxyribonucleic acid.",
-            "speed of light": "The speed of light is approximately 299,792 kilometers per second.",
-            "water formula": "The chemical formula for water is H2O.",
-            "mona lisa": "Leonardo da Vinci painted the Mona Lisa."
-        }
-        
-        # Self-reference information
+        # Initialize self-information
         self.self_info = {
             "name": "NeuraFlux",
             "creator": "Saptarshi Halder",
-            "architecture": "Transformer",
+            "architecture": "transformer-based",
+            "parameters": "1.45 million",
             "layers": "6",
             "attention_heads": "6",
             "hidden_size": "384",
-            "parameters": "1.45 million",
-            "purpose": "Demonstrate language model concepts",
-            "capabilities": "Text generation, question answering, information retrieval"
+            "capabilities": "text generation, question answering, math problem solving, and retrieval-augmented generation",
+            "purpose": "demonstrate the fundamental concepts of modern transformer-based language models",
+            "creation_date": "2023",
+            "training_data": "a diverse corpus of text including educational content, general knowledge, and mathematical concepts",
+            "limitations": "limited vocabulary size (10,000 tokens) and context length (512 tokens)"
+        }
+        
+        # Initialize factual knowledge base
+        self.facts = self._initialize_facts()
+        
+        # Initialize math capabilities
+        self.math_patterns = [
+            (r'(\d+)\s*\+\s*(\d+)', self._add),
+            (r'(\d+)\s*-\s*(\d+)', self._subtract),
+            (r'(\d+)\s*\*\s*(\d+)', self._multiply),
+            (r'(\d+)\s*/\s*(\d+)', self._divide),
+            (r'(\d+)\s*\^\s*(\d+)', self._power),
+            (r'sqrt\s*\(\s*(\d+)\s*\)', self._sqrt),
+            (r'factorial\s*\(\s*(\d+)\s*\)', self._factorial),
+            (r'solve\s+(.+?)=(.+)', self._solve_equation),
+            (r'integrate\s+(.+?)\s+with\s+respect\s+to\s+(.+)', self._integrate),
+            (r'derivative\s+of\s+(.+?)\s+with\s+respect\s+to\s+(.+)', self._differentiate)
+        ]
+    
+    def _initialize_facts(self) -> Dict[str, str]:
+        """Initialize a knowledge base of facts"""
+        return {
+            "earth sun": "The Earth orbits the Sun at an average distance of about 93 million miles (150 million kilometers).",
+            "water boil": "Water boils at 100 degrees Celsius (212 degrees Fahrenheit) at standard atmospheric pressure.",
+            "human heart": "The human heart beats about 100,000 times per day, pumping about 2,000 gallons of blood.",
+            "light speed": "Light travels at a speed of approximately 299,792,458 meters per second in a vacuum.",
+            "dna": "DNA (deoxyribonucleic acid) is a molecule that carries genetic information and instructions for development, functioning, growth, and reproduction.",
+            "python programming": "Python is a high-level, interpreted programming language known for its readability and versatility.",
+            "neural network": "A neural network is a computational model inspired by the structure and function of the human brain, used in machine learning.",
+            "transformer model": "Transformer models are a type of neural network architecture that uses self-attention mechanisms to process sequential data.",
+            "attention mechanism": "Attention mechanisms allow neural networks to focus on specific parts of input data when making predictions.",
+            "rag": "RAG (Retrieval-Augmented Generation) is a technique that combines retrieval of relevant documents with text generation to improve factual accuracy."
         }
     
-    def _compute_similarity(self, query: str, document: str) -> float:
-        """Compute simple word overlap similarity between query and document"""
-        query_words = set(re.findall(r'\w+', query.lower()))
-        doc_words = set(re.findall(r'\w+', document.lower()))
-        
-        if not query_words or not doc_words:
-            return 0.0
-        
-        intersection = query_words.intersection(doc_words)
-        return len(intersection) / ((len(query_words) + len(doc_words)) / 2)
+    def _add(self, match) -> str:
+        a, b = int(match.group(1)), int(match.group(2))
+        return f"{a} + {b} = {a + b}"
     
-    def retrieve(self, query: str, top_k: int = 2) -> List[str]:
-        """Retrieve relevant documents from knowledge base"""
+    def _subtract(self, match) -> str:
+        a, b = int(match.group(1)), int(match.group(2))
+        return f"{a} - {b} = {a - b}"
+    
+    def _multiply(self, match) -> str:
+        a, b = int(match.group(1)), int(match.group(2))
+        return f"{a} * {b} = {a * b}"
+    
+    def _divide(self, match) -> str:
+        a, b = int(match.group(1)), int(match.group(2))
+        if b == 0:
+            return "Division by zero is undefined."
+        return f"{a} / {b} = {a / b}"
+    
+    def _power(self, match) -> str:
+        a, b = int(match.group(1)), int(match.group(2))
+        return f"{a}^{b} = {a ** b}"
+    
+    def _sqrt(self, match) -> str:
+        a = int(match.group(1))
+        if a < 0:
+            return f"The square root of {a} is not a real number."
+        return f"sqrt({a}) = {math.sqrt(a)}"
+    
+    def _factorial(self, match) -> str:
+        a = int(match.group(1))
+        if a < 0:
+            return f"Factorial is not defined for negative numbers."
+        if a > 20:
+            return f"The result is too large to compute efficiently."
+        return f"factorial({a}) = {math.factorial(a)}"
+    
+    def _solve_equation(self, match) -> str:
+        try:
+            left = match.group(1).strip()
+            right = match.group(2).strip()
+            
+            # Convert to sympy expression
+            x = sympy.Symbol('x')
+            equation = sympy.Eq(sympy.sympify(left), sympy.sympify(right))
+            solution = sympy.solve(equation, x)
+            
+            return f"The solution to {left} = {right} is x = {solution}"
+        except Exception as e:
+            return f"I couldn't solve this equation. Error: {str(e)}"
+    
+    def _integrate(self, match) -> str:
+        try:
+            expr = match.group(1).strip()
+            var = match.group(2).strip()
+            
+            # Convert to sympy expression
+            x = sympy.Symbol(var)
+            expression = sympy.sympify(expr)
+            result = sympy.integrate(expression, x)
+            
+            return f"The integral of {expr} with respect to {var} is {result} + C"
+        except Exception as e:
+            return f"I couldn't integrate this expression. Error: {str(e)}"
+    
+    def _differentiate(self, match) -> str:
+        try:
+            expr = match.group(1).strip()
+            var = match.group(2).strip()
+            
+            # Convert to sympy expression
+            x = sympy.Symbol(var)
+            expression = sympy.sympify(expr)
+            result = sympy.diff(expression, x)
+            
+            return f"The derivative of {expr} with respect to {var} is {result}"
+        except Exception as e:
+            return f"I couldn't differentiate this expression. Error: {str(e)}"
+    
+    def add_document(self, doc_id: str, content: str):
+        """Add a document to the RAG store"""
+        self.documents.append({
+            "id": doc_id,
+            "content": content
+        })
+    
+    def build_document_embeddings(self):
+        """Build document embeddings (simplified)"""
+        # In a real implementation, this would use the model to create embeddings
+        # Here we'll just use a simple representation for demonstration
+        self.document_embeddings = []
+        for doc in self.documents:
+            # Simple bag of words representation
+            words = set(doc["content"].lower().split())
+            self.document_embeddings.append(words)
+    
+    def retrieve(self, query: str, top_k: int = 3) -> List[Dict[str, Any]]:
+        """Retrieve relevant documents for a query"""
+        if not self.documents:
+            return []
+        
+        # Simple retrieval based on word overlap
+        query_words = set(query.lower().split())
         similarities = []
         
-        # Check knowledge base
-        for key, document in self.knowledge.items():
-            score = self._compute_similarity(query, document)
+        for i, doc_words in enumerate(self.document_embeddings):
+            # Calculate Jaccard similarity
+            intersection = len(query_words.intersection(doc_words))
+            union = len(query_words.union(doc_words))
+            score = intersection / union if union > 0 else 0
+            
+            document = self.documents[i]
             similarities.append((document, score))
         
         # Sort by score and take top_k
@@ -243,7 +330,7 @@ class NanoNLPEngine:
             return True
         
         # Check for specific self-attributes
-        attributes = ["name", "creator", "made", "built", "parameters", "architecture"]
+        attributes = ["name", "creator", "made", "built", "parameters", "architecture", "origin", "purpose", "training"]
         if any(attr in query_lower for attr in attributes):
             return True
             
@@ -256,20 +343,65 @@ class NanoNLPEngine:
         # Check for specific attribute queries
         if "name" in query_lower:
             return f"My name is {self.self_info['name']}."
-        elif "creator" in query_lower or "made" in query_lower or "built" in query_lower:
-            return f"I was created by {self.self_info['creator']}."
+        elif "creator" in query_lower or "made" in query_lower or "built" in query_lower or "origin" in query_lower:
+            return f"I was created by {self.self_info['creator']} in {self.self_info['creation_date']} as a demonstration of transformer-based language models."
         elif "architecture" in query_lower:
-            return f"I use a {self.self_info['architecture']} architecture with {self.self_info['layers']} layers and {self.self_info['attention_heads']} attention heads."
+            return f"I use a {self.self_info['architecture']} architecture with {self.self_info['layers']} layers, {self.self_info['attention_heads']} attention heads, and a hidden size of {self.self_info['hidden_size']}."
         elif "parameters" in query_lower:
-            return f"I have {self.self_info['parameters']} parameters."
+            return f"I have {self.self_info['parameters']} parameters, which is small compared to larger models like GPT-3 (175 billion) or GPT-4, but sufficient to demonstrate the core concepts of transformer models."
         elif "do" in query_lower or "capable" in query_lower or "capabilities" in query_lower:
-            return f"I can perform {self.self_info['capabilities']}."
+            return f"I can perform {self.self_info['capabilities']}. I'm particularly good at answering questions about myself, solving math problems, and retrieving information from my knowledge base."
         elif "purpose" in query_lower:
-            return f"My purpose is to {self.self_info['purpose']}."
+            return f"My purpose is to {self.self_info['purpose']}. I serve as an educational tool to help people understand how language models work."
+        elif "training" in query_lower or "trained" in query_lower:
+            return f"I was trained on {self.self_info['training_data']}. My training process involved masked language modeling and next token prediction tasks."
+        elif "limitation" in query_lower:
+            return f"My main limitations include {self.self_info['limitations']}. I'm also a simplified implementation, so I don't have the capabilities of larger commercial models."
         
         # General self introduction
         return (f"I am {self.self_info['name']}, a {self.self_info['architecture']} language model "
-                f"with {self.self_info['parameters']} parameters created by {self.self_info['creator']}.")
+                f"with {self.self_info['parameters']} parameters created by {self.self_info['creator']}. "
+                f"I was designed to {self.self_info['purpose']} and can help with {self.self_info['capabilities']}.")
+    
+    def is_math_query(self, query: str) -> bool:
+        """Check if the query is a math problem"""
+        # Check for math keywords
+        math_keywords = ["calculate", "compute", "solve", "evaluate", "simplify", "factor", "expand", "integrate", "derivative"]
+        if any(keyword in query.lower() for keyword in math_keywords):
+            return True
+        
+        # Check for math operators
+        math_operators = ["+", "-", "*", "/", "^", "=", "sqrt", "factorial"]
+        if any(op in query for op in math_operators):
+            return True
+        
+        # Check for numbers
+        if re.search(r'\d+', query):
+            return True
+            
+        return False
+    
+    def solve_math_problem(self, query: str) -> str:
+        """Solve a math problem"""
+        # Try to match against known patterns
+        for pattern, handler in self.math_patterns:
+            match = re.search(pattern, query)
+            if match:
+                return handler(match)
+        
+        # If no pattern matches, try to interpret as a general expression
+        try:
+            # Extract potential mathematical expression
+            expr_match = re.search(r'([\d\s\+\-\*\/\^\(\)]+)', query)
+            if expr_match:
+                expr = expr_match.group(1).strip()
+                # Use sympy to evaluate
+                result = sympy.sympify(expr)
+                return f"The result of {expr} is {result}"
+        except Exception:
+            pass
+        
+        return "I'm not sure how to solve this math problem. Could you please rephrase it or provide more details?"
     
     def search_facts(self, query: str) -> Optional[str]:
         """Search factual knowledge base for answers"""
@@ -314,7 +446,11 @@ class NanoNLPEngine:
     
     def answer(self, query: str) -> str:
         """Main interface to generate answers"""
-        # First check if it's a self-query
+        # First check if it's a math problem
+        if self.is_math_query(query):
+            return self.solve_math_problem(query)
+        
+        # Then check if it's a self-query
         if self.is_self_query(query):
             return self.answer_self_query(query)
         
@@ -328,7 +464,7 @@ class NanoNLPEngine:
         
         if context:
             # Combine context and generate response
-            context_text = " ".join(context)
+            context_text = " ".join([doc["content"] for doc in context])
             return f"Based on my knowledge: {context_text}"
         else:
             # Fall back to simpler generation
@@ -344,6 +480,12 @@ if __name__ == "__main__":
     config = NanoConfig()
     tokenizer = NanoTokenizer()
     model = NanoNLPEngine(config, tokenizer)
+    
+    # Add some documents for RAG
+    model.add_document("model_info", "NeuraFlux is a small language model with 1.45M parameters created by Saptarshi Halder.")
+    model.add_document("model_architecture", "NeuraFlux uses a transformer architecture with 6 layers and 6 attention heads.")
+    model.add_document("model_capabilities", "NeuraFlux can answer questions, generate text, solve math problems, and retrieve information.")
+    model.build_document_embeddings()
     
     while True:
         # Read input from stdin
