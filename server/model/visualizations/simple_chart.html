@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Training Visualization</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chart { width: 80%; height: 300px; border: 1px solid #ddd; position: relative; margin: 20px 0; }
+        .bar { position: absolute; bottom: 0; background: #3498db; width: 8px; }
+        .title { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>NeuraFlux Training Visualization</h1>
+    <p>Generated at: 2025-03-11 03:04:03</p>
+    
+    <div class="title">Training Loss</div>
+    <div class="chart" id="train-loss">
+        <div class="bar" style="height: 250px; left: 0.0%;"></div>
+        <div class="bar" style="height: 226px; left: 2.0%;"></div>
+        <div class="bar" style="height: 200px; left: 4.0%;"></div>
+        <div class="bar" style="height: 188px; left: 6.0%;"></div>
+        <div class="bar" style="height: 176px; left: 8.0%;"></div>
+        <div class="bar" style="height: 164px; left: 10.0%;"></div>
+        <div class="bar" style="height: 158px; left: 12.0%;"></div>
+        <div class="bar" style="height: 153px; left: 14.0%;"></div>
+        <div class="bar" style="height: 142px; left: 16.0%;"></div>
+        <div class="bar" style="height: 138px; left: 18.0%;"></div>
+        <div class="bar" style="height: 116px; left: 20.0%;"></div>
+        <div class="bar" style="height: 105px; left: 22.0%;"></div>
+        <div class="bar" style="height: 108px; left: 24.0%;"></div>
+        <div class="bar" style="height: 93px; left: 26.0%;"></div>
+        <div class="bar" style="height: 89px; left: 28.0%;"></div>
+        <div class="bar" style="height: 75px; left: 30.0%;"></div>
+        <div class="bar" style="height: 62px; left: 32.0%;"></div>
+        <div class="bar" style="height: 54px; left: 34.0%;"></div>
+        <div class="bar" style="height: 43px; left: 36.0%;"></div>
+        <div class="bar" style="height: 44px; left: 38.0%;"></div>
+        <div class="bar" style="height: 40px; left: 40.0%;"></div>
+        <div class="bar" style="height: 43px; left: 42.0%;"></div>
+        <div class="bar" style="height: 42px; left: 44.0%;"></div>
+        <div class="bar" style="height: 46px; left: 46.0%;"></div>
+        <div class="bar" style="height: 46px; left: 48.0%;"></div>
+        <div class="bar" style="height: 52px; left: 50.0%;"></div>
+        <div class="bar" style="height: 44px; left: 52.0%;"></div>
+        <div class="bar" style="height: 35px; left: 54.0%;"></div>
+        <div class="bar" style="height: 22px; left: 56.0%;"></div>
+        <div class="bar" style="height: 31px; left: 58.0%;"></div>
+        <div class="bar" style="height: 21px; left: 60.0%;"></div>
+        <div class="bar" style="height: 19px; left: 62.0%;"></div>
+        <div class="bar" style="height: 18px; left: 64.0%;"></div>
+        <div class="bar" style="height: 7px; left: 66.0%;"></div>
+        <div class="bar" style="height: 6px; left: 68.0%;"></div>
+        <div class="bar" style="height: 13px; left: 70.0%;"></div>
+        <div class="bar" style="height: 4px; left: 72.0%;"></div>
+        <div class="bar" style="height: 14px; left: 74.0%;"></div>
+        <div class="bar" style="height: 8px; left: 76.0%;"></div>
+        <div class="bar" style="height: 19px; left: 78.0%;"></div>
+
+    </div>
+    
+    <div class="title">Rewards</div>
+    <div class="chart" id="rewards">
+        <div class="bar" style="height: 0px; left: 0.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 6px; left: 2.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 11px; left: 4.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 16px; left: 6.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 31px; left: 8.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 41px; left: 10.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 47px; left: 12.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 50px; left: 14.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 67px; left: 16.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 74px; left: 18.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 76px; left: 20.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 83px; left: 22.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 94px; left: 24.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 97px; left: 26.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 105px; left: 28.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 114px; left: 30.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 119px; left: 32.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 125px; left: 34.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 126px; left: 36.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 139px; left: 38.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 143px; left: 40.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 147px; left: 42.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 162px; left: 44.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 167px; left: 46.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 181px; left: 48.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 190px; left: 50.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 201px; left: 52.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 215px; left: 54.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 216px; left: 56.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 216px; left: 58.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 226px; left: 60.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 241px; left: 62.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 243px; left: 64.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 250px; left: 66.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 250px; left: 68.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 250px; left: 70.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 250px; left: 72.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 250px; left: 74.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 250px; left: 76.0%; background: #2ecc71;"></div>
+        <div class="bar" style="height: 250px; left: 78.0%; background: #2ecc71;"></div>
+
+    </div>
+    
+    <p>These charts are generated without any external libraries.</p>
+    <p>To generate proper visualizations, install matplotlib and other required libraries.</p>
+</body>
+</html>
