@@ -1,0 +1,2 @@
+Error at 2025-03-11 12:19:59:
+'charmap' codec can't encode character '\u2192' in position 23323: character maps to <undefined>

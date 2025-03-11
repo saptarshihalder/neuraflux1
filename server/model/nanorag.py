@@ -9,6 +9,8 @@ import torch.nn as nn # type: ignore
 import torch.nn.functional as F # type: ignore
 from torch.utils.data import Dataset, DataLoader # type: ignore
 from typing import List, Tuple, Optional, Dict, Any, Union
+import torch.optim as optim
+from visualization import plot_training_metrics, visualize_token_importance
 
 
 class NanoConfig:
@@ -27,6 +29,8 @@ class NanoConfig:
         pad_token_id: int = 0,
         bos_token_id: int = 1,
         eos_token_id: int = 2,
+        ppo_epochs: int = 10,
+        clip_param: float = 0.2
     ):
         self.vocab_size = vocab_size
         self.hidden_size = hidden_size
@@ -41,6 +45,8 @@ class NanoConfig:
         self.pad_token_id = pad_token_id
         self.bos_token_id = bos_token_id
         self.eos_token_id = eos_token_id
+        self.ppo_epochs = ppo_epochs
+        self.clip_param = clip_param
 
 
 # Basic components of the transformer architecture
@@ -336,7 +342,315 @@ class NanoTokenizer:
         self.ids_to_tokens = {v: k for k, v in self.vocab.items()}
 
 
+class NanoRewardModel(nn.Module):
+    """
+    Reward model for predicting human preferences.
+    """
+    def __init__(self, config):
+        super().__init__()
+        self.config = config
+        self.embedding = NanoEmbeddings(config)
+        self.transformer = NanoModel(config)
+        self.head = nn.Linear(config.hidden_size, 1)
+    
+    def forward(self, input_ids, attention_mask):
+        embeddings = self.embedding(input_ids)
+        hidden_states = self.transformer(embeddings, attention_mask)
+        reward = self.head(hidden_states[:, -1])
+        return reward
+
+
+class NanoPPO:
+    """
+    Proximal Policy Optimization (PPO) for policy learning.
+    """
+    def __init__(self, model, optimizer, ppo_epochs, clip_param):
+        self.model = model
+        self.optimizer = optimizer
+        self.ppo_epochs = ppo_epochs
+        self.clip_param = clip_param
+
+    def update(self, rollouts):
+        for _ in range(self.ppo_epochs):
+            for batch in rollouts:
+                # Compute policy and value losses
+                policy_loss, value_loss = self.compute_losses(batch)
+                
+                # Backpropagate and optimize
+                self.optimizer.zero_grad()
+                (policy_loss + value_loss).backward()
+                self.optimizer.step()
+
+    def compute_losses(self, batch):
+        # Compute advantages and returns
+        advantages = batch['advantages']
+        returns = batch['returns']
+
+        # Get model outputs
+        logits, values = self.model(batch['input_ids'], batch['attention_mask'])
+        
+        # Compute probability ratios and policy loss
+        probs = torch.softmax(logits, dim=-1)
+        action_probs = probs.gather(2, batch['actions'])
+        old_action_probs = batch['action_probs']
+        ratio = action_probs / old_action_probs
+        policy_loss = -torch.min(ratio * advantages, 
+            torch.clamp(ratio, 1 - self.clip_param, 1 + self.clip_param) * advantages
+        ).mean()
+
+        # Compute value loss
+        value_loss = (returns - values).pow(2).mean()
+
+        return policy_loss, value_loss
+
+
+class NanoDPO:
+    """
+    Direct Preference Optimization (DPO) - A more efficient alternative to RLHF
+    that directly optimizes the policy without a separate reward model.
+    """
+    def __init__(self, model, beta=0.1, learning_rate=1e-5):
+        self.model = model
+        self.beta = beta
+        self.optimizer = optim.AdamW(model.parameters(), lr=learning_rate)
+    
+    def compute_loss(self, chosen_ids, rejected_ids, attention_mask=None):
+        """Compute DPO loss based on preferred and non-preferred completions"""
+        # Get logits for chosen and rejected sequences
+        chosen_logits = self.model(chosen_ids, attention_mask=attention_mask)["logits"]
+        rejected_logits = self.model(rejected_ids, attention_mask=attention_mask)["logits"]
+        
+        # Get log probs for the tokens
+        chosen_log_probs = self._get_sequence_log_probs(chosen_logits, chosen_ids)
+        rejected_log_probs = self._get_sequence_log_probs(rejected_logits, rejected_ids)
+        
+        # Calculate the DPO loss
+        logits = chosen_log_probs - rejected_log_probs
+        loss = -torch.nn.functional.logsigmoid(self.beta * logits).mean()
+        
+        return loss
+    
+    def _get_sequence_log_probs(self, logits, input_ids):
+        """Calculate log probabilities for the given sequences"""
+        log_probs = torch.nn.functional.log_softmax(logits[:, :-1], dim=-1)
+        target_ids = input_ids[:, 1:]
+        
+        # Gather the log probs corresponding to the target tokens
+        token_log_probs = log_probs.gather(-1, target_ids.unsqueeze(-1)).squeeze(-1)
+        
+        # Apply mask if provided and calculate per-sequence log prob
+        sequence_log_probs = token_log_probs.sum(dim=-1)
+        
+        return sequence_log_probs
+    
+    def train_step(self, chosen_ids, rejected_ids, attention_mask=None):
+        """Perform one training step"""
+        self.optimizer.zero_grad()
+        loss = self.compute_loss(chosen_ids, rejected_ids, attention_mask)
+        loss.backward()
+        self.optimizer.step()
+        return loss.item()
+
+
+class NanoREINFORCE:
+    """
+    REINFORCE algorithm - A policy gradient method for reinforcement learning.
+    """
+    def __init__(self, model, optimizer, gamma=0.99):
+        self.model = model
+        self.optimizer = optimizer
+        self.gamma = gamma  # Discount factor
+    
+    def compute_returns(self, rewards):
+        """Compute discounted returns"""
+        returns = []
+        R = 0
+        
+        # Calculate discounted returns
+        for r in reversed(rewards):
+            R = r + self.gamma * R
+            returns.insert(0, R)
+            
+        # Normalize returns for stability
+        returns = torch.tensor(returns)
+        returns = (returns - returns.mean()) / (returns.std() + 1e-8)
+        
+        return returns
+    
+    def update(self, trajectories):
+        """
+        Update model parameters using REINFORCE
+        trajectories: List of (state, action, reward) tuples
+        """
+        # Extract states, actions, and rewards
+        states = [t[0] for t in trajectories]
+        actions = [t[1] for t in trajectories]
+        rewards = [t[2] for t in trajectories]
+        
+        # Compute returns
+        returns = self.compute_returns(rewards)
+        
+        # Compute loss
+        loss = 0
+        for state, action, G in zip(states, actions, returns):
+            # Forward pass
+            logits = self.model(state)["logits"]
+            
+            # Calculate log probability of the action
+            log_probs = F.log_softmax(logits, dim=-1)
+            log_prob = log_probs[0, -1, action]
+            
+            # REINFORCE loss
+            loss += -log_prob * G
+        
+        # Backpropagate and optimize
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+        
+        return loss.item()
+
+
+class NanoConstitutionalAI:
+    """
+    Constitutional AI - Apply rule-based constraints for model alignment.
+    """
+    def __init__(self, model, rules=None):
+        self.model = model
+        # Default safety rules if none provided
+        self.rules = rules or [
+            "Always provide accurate information and indicate uncertainty when appropriate.",
+            "Be helpful, harmless, and honest.",
+            "Refuse to generate harmful, illegal, or unethical content.",
+            "Be respectful and avoid bias or discrimination.",
+        ]
+    
+    def evaluate_against_constitution(self, text):
+        """
+        Evaluate generated text against constitutional rules.
+        Returns compliance score and violated rules.
+        """
+        violated_rules = []
+        compliance_score = 1.0
+        
+        # Simple keyword-based evaluation (just for demonstration)
+        harmful_keywords = ["kill", "harm", "illegal", "bomb", "weapon", "hack", "steal"]
+        
+        # Check for harmful keywords
+        for keyword in harmful_keywords:
+            if keyword in text.lower():
+                violated_rules.append(f"Generated text contains harmful term: '{keyword}'")
+                compliance_score -= 0.2  # Reduce score for each violation
+        
+        # Ensure score is between 0 and 1
+        compliance_score = max(0.0, compliance_score)
+        
+        return compliance_score, violated_rules
+    
+    def constitutional_filter(self, generated_texts):
+        """
+        Filter generated responses based on constitutional rules.
+        If all responses violate rules, generate a safe alternative.
+        """
+        filtered_responses = []
+        
+        for text in generated_texts:
+            score, violations = self.evaluate_against_constitution(text)
+            
+            if score > 0.6:  # Accept responses with high compliance
+                filtered_responses.append((text, score))
+        
+        # Sort by compliance score
+        filtered_responses.sort(key=lambda x: x[1], reverse=True)
+        
+        if filtered_responses:
+            return filtered_responses[0][0]  # Return the most compliant response
+        else:
+            # All responses violated rules, return a safe alternative
+            return "I'm unable to provide a response that complies with my ethical guidelines."
+
+
+class NanoMultiTaskRL:
+    """
+    Multi-Task Reinforcement Learning for optimizing multiple objectives.
+    """
+    def __init__(self, model, task_rewards, task_weights=None):
+        """
+        Initialize multi-task RL.
+        
+        Parameters:
+        - model: The language model
+        - task_rewards: Dictionary mapping task names to reward functions
+        - task_weights: Optional dictionary mapping task names to importance weights
+        """
+        self.model = model
+        self.task_rewards = task_rewards
+        self.task_weights = task_weights or {task: 1.0 for task in task_rewards}
+        self.optimizer = optim.AdamW(model.parameters(), lr=1e-5)
+    
+    def compute_weighted_rewards(self, responses, prompts):
+        """Compute weighted rewards across all tasks"""
+        total_rewards = torch.zeros(len(responses))
+        
+        for task, reward_fn in self.task_rewards.items():
+            # Compute task-specific rewards
+            task_rewards = torch.tensor([reward_fn(resp, prompt) 
+                                       for resp, prompt in zip(responses, prompts)])
+            
+            # Apply task weight
+            weight = self.task_weights[task]
+            total_rewards += weight * task_rewards
+        
+        return total_rewards
+    
+    def update(self, prompts, responses):
+        """Update model based on multi-task rewards"""
+        # Compute weighted rewards
+        rewards = self.compute_weighted_rewards(responses, prompts)
+        
+        # Normalize rewards
+        rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-8)
+        
+        # Compute policy loss
+        loss = 0
+        for prompt, response, reward in zip(prompts, responses, rewards):
+            # Forward pass to get logits
+            input_ids = torch.tensor(self.model.tokenizer.encode(prompt + response))
+            logits = self.model(input_ids.unsqueeze(0))["logits"]
+            
+            # Get log probs for generated tokens
+            log_probs = self._compute_response_log_probs(logits, response)
+            
+            # Policy gradient loss
+            loss += -log_probs.sum() * reward
+        
+        # Backpropagate and optimize
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+        
+        return loss.item()
+    
+    def _compute_response_log_probs(self, logits, response):
+        """Compute log probabilities for the response portion"""
+        # Extract and process logits for the response tokens
+        response_logits = logits[0, -len(response)-1:-1]
+        response_probs = F.softmax(response_logits, dim=-1)
+        
+        # Get token IDs for the response
+        response_ids = torch.tensor(self.model.tokenizer.encode(response)[1:])  # Skip BOS
+        
+        # Gather probabilities for the actual tokens
+        token_probs = torch.gather(response_probs, 1, response_ids.unsqueeze(1))
+        log_probs = torch.log(token_probs + 1e-10).squeeze(1)
+        
+        return log_probs
+
+
 class NanoRAG(nn.Module):
+    """
+    Full RAG model with Transformer and retrieval components.
+    """
     def __init__(
         self, 
         config: Optional[NanoConfig] = None,
@@ -356,6 +670,31 @@ class NanoRAG(nn.Module):
         
         # Initialize weights
         self.apply(self._init_weights)
+        
+        # Reward model
+        self.reward_model = NanoRewardModel(self.config)
+        
+        # Advanced RL components
+        self.ppo = NanoPPO(self, optim.Adam(self.parameters()), self.config.ppo_epochs, self.config.clip_param)
+        self.dpo = NanoDPO(self, beta=0.1, learning_rate=5e-6)
+        self.reinforce = NanoREINFORCE(self, optim.Adam(self.parameters()), gamma=0.99)
+        self.constitutional_ai = NanoConstitutionalAI(self)
+        
+        # Initialize reward functions for different tasks
+        task_rewards = {
+            "helpfulness": lambda resp, prompt: self._evaluate_helpfulness(resp, prompt),
+            "harmlessness": lambda resp, prompt: self._evaluate_harmlessness(resp, prompt),
+            "honesty": lambda resp, prompt: self._evaluate_honesty(resp, prompt)
+        }
+        
+        # Task weights - can be adjusted based on priorities
+        task_weights = {
+            "helpfulness": 1.0,
+            "harmlessness": 1.5,  # Higher weight for safety
+            "honesty": 1.2
+        }
+        
+        self.multi_task_rl = NanoMultiTaskRL(self, task_rewards, task_weights)
     
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):
@@ -381,18 +720,27 @@ class NanoRAG(nn.Module):
         input_ids: Optional[torch.Tensor] = None,
         attention_mask: Optional[torch.Tensor] = None,
         labels: Optional[torch.Tensor] = None,
-        return_dict: bool = True
+        return_dict: bool = True,
+        do_rag: bool = True
     ) -> Union[Dict[str, torch.Tensor], Tuple[torch.Tensor, ...]]:
-        # Get transformer outputs
-        transformer_outputs = self.transformer(
-            input_ids=input_ids,
-            attention_mask=attention_mask,
-        )
+        if do_rag:
+            # Retrieve relevant documents
+            docs = self.retrieve(input_ids, top_k=3)
+            
+            # Concatenate document embeddings to input
+            doc_embeddings = self.document_embeddings[docs[:, 0].long()]
+            embeddings = torch.cat((self.transformer.embeddings(input_ids), doc_embeddings), dim=1)
+        else:
+            embeddings = self.transformer.embeddings(input_ids)
         
-        hidden_states = transformer_outputs[0]
+        # Pass through transformer
+        hidden_states, all_attentions = self.transformer(embeddings, attention_mask)
         
-        # Generate language model logits
+        # Language modeling head
         lm_logits = self.lm_head(hidden_states)
+        
+        # Reward modeling head
+        reward = self.reward_model(input_ids, attention_mask)
         
         loss = None
         if labels is not None:
@@ -412,9 +760,10 @@ class NanoRAG(nn.Module):
                 "loss": loss,
                 "logits": lm_logits,
                 "hidden_states": hidden_states,
+                "reward": reward
             }
         else:
-            outputs = (lm_logits,) + transformer_outputs[1:]
+            outputs = (lm_logits, reward) + tuple(all_attentions)
             if loss is not None:
                 outputs = (loss,) + outputs
             return outputs
@@ -598,6 +947,20 @@ class NanoRAG(nn.Module):
         # Generate with the context
         return self.generate(rag_prompt, max_length=max_length, device=device)[0]
 
+    # Simple reward evaluation functions (for demonstration)
+    def _evaluate_helpfulness(self, response, prompt):
+        # In a real system, this would be more sophisticated
+        return 0.5  # Placeholder value
+    
+    def _evaluate_harmlessness(self, response, prompt):
+        # Check against harmful patterns
+        score, _ = self.constitutional_ai.evaluate_against_constitution(response)
+        return score
+    
+    def _evaluate_honesty(self, response, prompt):
+        # In a real system, this would compare against facts
+        return 0.8  # Placeholder value
+
 
 # Simple console interface for testing when run directly
 if __name__ == "__main__":
@@ -653,3 +1016,9 @@ if __name__ == "__main__":
         # If reading from a pipe, just process one message and exit
         if not sys.stdin.isatty():
             break
+
+# Plot specific metrics
+plot_training_metrics(my_metrics)
+
+# Analyze token importance for a specific input
+visualize_token_importance(model, tokenizer, "What is the purpose of reinforcement learning?")
