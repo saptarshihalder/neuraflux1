@@ -1,10 +1,14 @@
-numpy>=1.21.0
+torch>=2.0.0
+numpy>=1.20.0
+regex>=2021.4.4
+Flask>=2.0.0
+bitsandbytes>=0.41.0
+scikit-learn>=1.0.0
+tqdm>=4.62.0
 sympy>=1.9
 scipy>=1.7.0
 matplotlib>=3.4.0
-torch>=1.9.0
 transformers>=4.11.0
-tqdm>=4.62.0
 pytest>=6.2.5
 mypy>=0.910
 black>=21.9b0

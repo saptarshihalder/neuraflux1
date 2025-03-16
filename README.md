@@ -1,6 +1,167 @@
-# NeuraFlux Small Language Model
+# NeuraFlux: Enhanced Small Language Model
 
-A fully-implemented small language model built from scratch. This project demonstrates the fundamental concepts of modern transformer-based language models by implementing a complete, albeit small, transformer architecture with RAG (Retrieval Augmented Generation) capabilities.
+NeuraFlux is a parameter-efficient 10M language model with Retrieval-Augmented Generation capabilities and enhanced English language quality.
+
+## Features
+
+- **Efficient Architecture**: Uses Grouped-Query Attention (GQA) and ALiBi positional encoding
+- **Enhanced English Output**: Optimized generation parameters and grammar correction
+- **Retrieval Capabilities**: Augments model knowledge with relevant document retrieval
+- **Web Interface**: Simple Flask-based UI for interacting with the model
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/neuraflux.git
+cd neuraflux
+```
+
+2. Install dependencies:
+```bash
+pip install -r server/requirements.txt
+```
+
+3. Install Java (required for language-tool-python):
+```bash
+# For Ubuntu/Debian
+sudo apt-get install default-jre
+
+# For Windows
+# Download and install from https://www.java.com/en/download/
+```
+
+## Usage
+
+### Starting the Web UI
+
+```bash
+python server/web_ui.py
+```
+
+The server will be available at http://localhost:5000
+
+### Using the Command Line Interface
+
+```bash
+python -m server.model.nanorag
+```
+
+## Implementation Details
+
+### Enhanced English Language Generation
+
+NeuraFlux now features improved English language capabilities:
+
+1. **Optimized Generation Parameters**:
+   - Lower temperature (0.6) for more coherent responses
+   - Higher top-p (0.92) for richer vocabulary
+   - Stronger repetition penalty (1.3) to reduce redundancy
+
+2. **Enhanced Prompt Engineering**:
+   - Structured prompts that encourage well-organized responses
+   - Explicit instructions for grammar and clarity
+
+3. **Grammar Correction**:
+   - Uses LanguageTool for post-processing
+   - Automatically fixes common grammatical errors
+   - Preserves original meaning while improving readability
+
+## Custom Document Import
+
+Add your own documents to the retrieval database by modifying `web_ui.py`:
+
+```python
+# Add custom documents
+model.add_document("unique_id", "Your document content here")
+
+# Or add large documents with automatic chunking
+model.chunk_and_add_document("large_doc_id", large_text_content)
+```
+
+## License
+
+This project is open source under the MIT License.
+
+## Key Features
+
+- **Optimized Model Architecture**: 
+  - Grouped-Query Attention (GQA) for parameter efficiency
+  - ALiBi positional encoding to handle longer contexts
+  - Hybrid transformer layers with parameter sharing
+  - Dynamic sparsity during training
+
+- **Efficient Byte-Level BPE Tokenizer**:
+  - Parameter-efficient tokenizer using byte-level encoding
+  - Efficient caching mechanisms for improved speed
+
+- **Advanced Training Pipeline**:
+  - 8-bit quantization for optimizers
+  - Knowledge distillation
+  - Gradient checkpointing and mixed precision training
+
+- **Retrieval-Augmented Generation**:
+  - Semantic search over document database
+  - Context augmentation for improved factual responses
+  - Automatic document chunking and embedding
+
+## Web UI for Complex Question Answering
+
+The project includes a web-based user interface for interacting with the model and asking complex questions.
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/neuraflux.git
+   cd neuraflux
+   ```
+
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+### Running the Web UI
+
+Start the web interface with:
+
+```
+python server/web_ui.py
+```
+
+This will launch a web server on http://localhost:5000 where you can interact with the model.
+
+Options:
+- `--model_path`: Path to a pretrained model (default: ./models)
+- `--port`: Port to run the web server (default: 5000)
+- `--host`: Host to bind the server to (default: 0.0.0.0)
+
+Example:
+```
+python server/web_ui.py --model_path ./my_trained_model --port 8080
+```
+
+### Model Training
+
+To train the model from scratch:
+
+```
+python server/model/training.py
+```
+
+See the training script for available options and configurations.
+
+## System Requirements
+
+- Python 3.8+
+- PyTorch 2.0+
+- 4GB+ RAM
+- GPU recommended for training (but not required for inference)
+
+## License
+
+MIT License
 
 ## Features
 

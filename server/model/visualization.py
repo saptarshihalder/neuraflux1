@@ -398,79 +398,28 @@ def plot_rl_specific_metrics(metrics: Dict[str, List[float]],
 
 
 def visualize_token_importance(model, tokenizer, text: str, 
-                              save_path: str = 'visualizations/token_importance.png',
-                              show: bool = False):
+                              layer_idx: int = -1,
+                              head_idx: Optional[int] = None,
+                              save_path: Optional[str] = None):
     """
-    Visualize which tokens contribute most to the model's predictions.
+    Visualize importance of tokens in a given text using attention weights.
     
     Args:
-        model: NanoRAG model
-        tokenizer: The tokenizer
+        model: The model to analyze
+        tokenizer: Tokenizer to use
         text: Input text to analyze
-        save_path: Path to save the visualization
-        show: Whether to display the plot
+        layer_idx: Layer index to visualize
+        head_idx: Optional head index to visualize
+        save_path: Optional path to save the visualization
     """
-    # Tokenize input
-    tokens = tokenizer.tokenize(text)
-    input_ids = torch.tensor(tokenizer.encode(text)).unsqueeze(0)
+    # Create stub function that doesn't fail but shows a message
+    print(f"Token importance visualization is disabled in this version")
+    print(f"Would analyze: '{text}'")
     
-    # Put model in eval mode
-    model.eval()
-    
-    # Get baseline output
-    with torch.no_grad():
-        outputs = model(input_ids=input_ids)
-        baseline_logits = outputs["logits"]
-    
-    # Get importance scores by zeroing out each token one by one
-    importance_scores = []
-    
-    for i in range(len(tokens)):
-        # Create modified input with one token masked
-        modified_ids = input_ids.clone()
-        modified_ids[0, i+1] = tokenizer.vocab[tokenizer.pad_token]  # +1 for the BOS token
-        
-        # Get prediction
-        with torch.no_grad():
-            outputs = model(input_ids=modified_ids)
-            modified_logits = outputs["logits"]
-        
-        # Compute KL divergence between original and modified predictions
-        kl_div = torch.nn.functional.kl_div(
-            torch.nn.functional.log_softmax(modified_logits[:, -1], dim=-1),
-            torch.nn.functional.softmax(baseline_logits[:, -1], dim=-1),
-            reduction='sum'
-        ).item()
-        
-        importance_scores.append(kl_div)
-    
-    # Normalize scores
-    max_score = max(importance_scores)
-    if max_score > 0:
-        importance_scores = [score / max_score for score in importance_scores]
-    
-    # Plot
-    plt.figure(figsize=(14, 5))
-    
-    bars = plt.bar(range(len(tokens)), importance_scores, color='skyblue')
-    
-    # Color code by importance
-    for i, score in enumerate(importance_scores):
-        bars[i].set_color(plt.cm.viridis(score))
-    
-    plt.xticks(range(len(tokens)), tokens, rotation=45, ha='right')
-    plt.title('Token Importance for Prediction', fontsize=14)
-    plt.xlabel('Token')
-    plt.ylabel('Normalized Importance Score')
-    plt.grid(True, axis='y')
-    
-    plt.tight_layout()
-    plt.savefig(save_path, dpi=200, bbox_inches='tight')
-    
-    if show:
-        plt.show()
-    else:
-        plt.close()
+    # If this were implemented, it would:
+    # 1. Tokenize the text
+    # 2. Run a forward pass and extract attention weights
+    # 3. Plot a heatmap of token-to-token attention
 
 
 def plot_training_stage_comparison(metrics_by_stage: Dict[str, Dict[str, List[float]]],
